@@ -4,7 +4,7 @@ import {
     Route,
     Switch
 } from 'react-router-dom';
-import Home from '../pages/home';
+import Entry from '../pages/entry';
 import Login from '../pages/login';
 import NoMatch from '../pages/failure/404';
 
@@ -22,8 +22,8 @@ class BDRouter extends Component {
             <Router>
                 <div>
                     <Switch>
-                        <Route path="/" exact component={Login}/>
-                        <Route path="/home" exact component={Home}/>
+                        <Route path="/" exact component={Entry}/>
+                        <Route path="/Entry" exact component={Entry}/>
                         <Route component={NoMatch} />
                     </Switch>
                 </div>

@@ -1,11 +1,5 @@
 
-.container {
-    text-align: center;
-    font-size: 18px;
-}
-.red {
-    color: red
-}
-.font {
-    font-weight: bold
+.container { 
+   background-color: aqua;
+   min-height: 500px;
 }

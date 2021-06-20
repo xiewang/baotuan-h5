@@ -1,7 +1,10 @@
 const { injectBabelPlugin, getLoader } = require('react-app-rewired');
+const path = require("path")
+
 const {
   override,
   fixBabelImports,
+  addWebpackModuleRule
   // addLessLoader,
 } = require("customize-cra");
 
@@ -12,6 +15,15 @@ const fileLoaderMatcher = function (rule) {
 module.exports = override(
   fixBabelImports("import", {
       libraryName: "antd-mobile", libraryDirectory: "es", style: 'css' 
+  }),
+  addWebpackModuleRule({
+      test: /\.svg$/,
+      include: [path.resolve('src/assets/svg')],
+      use: [
+          {
+              loader: 'svg-sprite-loader',
+              options: { symbolId: "icon-[name]" }
+          }]
   })
 )
 // module.exports =  override(config, env) {

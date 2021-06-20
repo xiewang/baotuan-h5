@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import styles from './styles.module.css';
 import cns from 'classnames';
-class Home extends Component {
+class My extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -17,7 +17,7 @@ class Home extends Component {
         return (
           <div className={styles.container}>
             
-            <span>主页</span>
+            <span>我的</span>
             
           </div>
         );
@@ -25,4 +25,4 @@ class Home extends Component {
 }
 
 
-export default Home;
+export default My;

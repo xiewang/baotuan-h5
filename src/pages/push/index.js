@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
 import styles from './styles.module.css';
 import cns from 'classnames';
-class Home extends Component {
+class Push extends Component {
     constructor(props) {
         super(props);
         this.state = {
+          name: ''
         };
     }
 
@@ -12,12 +13,17 @@ class Home extends Component {
 
     }
     
+    _inputChange(e){
+      this.setState({
+        name:e.target.value
+      })
+    }
     render() {
-       
         return (
           <div className={styles.container}>
             
-            <span>主页</span>
+            <span>发布</span>
+            <input value={this.state.name || 'test'} onChange={(e)=>this._inputChange(e)}></input>
             
           </div>
         );
@@ -25,4 +31,4 @@ class Home extends Component {
 }
 
 
-export default Home;
+export default Push;
