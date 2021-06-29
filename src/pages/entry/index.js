@@ -9,7 +9,9 @@ import styles from './styles.module.css';
 import cns from 'classnames';
 import { 
     TabBar,
-    Icon
+    Icon,
+    WingBlank,
+    WhiteSpace
  } from 'antd-mobile';
 import Header from '../../components/header';
 import Home from '../home';
@@ -30,17 +32,18 @@ class Entry extends Component {
 
     renderContent(pageText) {
         return (
-          <div style={styles.PageContainer}>
-              {
-                  pageText === 'home' ?(
-                      <Home/>
-                  ) : 
-                  pageText === 'my' ?(
-                      <My/>
-                  ) : (
-                    <Push/>
-                  ) 
-              }
+          <div className={styles.pageContainer}>
+              <WhiteSpace size="md"></WhiteSpace>
+                {
+                    pageText === 'home' ?(
+                        <Home/>
+                    ) : 
+                    pageText === 'my' ?(
+                        <My/>
+                    ) : (
+                        <Push/>
+                    ) 
+                }
           </div>
         );
       }

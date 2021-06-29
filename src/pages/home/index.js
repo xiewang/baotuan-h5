@@ -8,6 +8,7 @@ class Home extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            activities: []
         };
     }
 
@@ -16,12 +17,14 @@ class Home extends Component {
     }
 
     _getList() {
-        return request({
-            url:'/user/getAll',
+        request({
+            url:'/activity/getAll',
             method:'get'
         }).then((res) => {
             if (res.data.state === 'SUCCESS') {
-                console.log(res.data);
+                this.setState({
+                    activities: res.data.data.content
+                });
             } 
         });
     }
@@ -31,7 +34,13 @@ class Home extends Component {
         return (
           <div className={styles.container}>
             
-            <span>主页</span>
+            {
+                this.state.activities.map(v=>{
+                    return (
+                        <div key={v.activityId}><span>活动：{v.activityName}</span></div>
+                    )
+                })
+            }
             
           </div>
         );
