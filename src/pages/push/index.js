@@ -17,7 +17,7 @@ class Push extends Component {
         super(props);
         this._setImage = this._setImage.bind(this);
         this.state = {
-          activityName: "xxtree",
+          activityName: "",
           location: "",
           price: "",
           createTime: "",
@@ -101,11 +101,15 @@ class Push extends Component {
                     />
                 </Flex.Item>
               </Flex>
-              
               <InputItem
                 placeholder=""
-                value={this.state.place}
-                onChange={val=>this.setState({place: val})}
+                value={this.state.activityName}
+                onChange={val=>this.setState({activityName: val})}
+              >活动名称</InputItem>
+              <InputItem
+                placeholder=""
+                value={this.state.location}
+                onChange={val=>this.setState({location: val})}
               >地点</InputItem>
               <InputItem
                 placeholder=""
@@ -119,17 +123,22 @@ class Push extends Component {
               >时间</InputItem>
               <InputItem
                 placeholder=""
+                value={this.state.volume}
+                onChange={val=>this.setState({volume: val})}
+              >人数</InputItem>
+              <InputItem
+                placeholder=""
                 value={this.state.description}
                 onChange={val=>this.setState({description: val})}
               >其他说明</InputItem>
             </List>
           </div>
-          <div className={styles.section}>
-            <List renderHeader={() => '发起人活动信息'}>
+          {/* <div className={styles.section}>
+            <List renderHeader={() => '发起人信息'}>
               <InputItem
                 placeholder=""
-                value={this.state.place}
-                onChange={val=>this.setState({place: val})}
+                value={this.state.userId}
+                onChange={val=>this.setState({providerName: val})}
               >用户名</InputItem>
               <InputItem
                 placeholder=""
@@ -138,27 +147,27 @@ class Push extends Component {
               >身份</InputItem>
               <InputItem
                 placeholder=""
-                value={this.state.place}
-                onChange={val=>this.setState({place: val})}
+                value={this.state.providerWechat}
+                onChange={val=>this.setState({providerWechat: val})}
               >微信名</InputItem>
             </List>
-          </div>
+          </div> */}
           <div className={styles.section}>
             <List renderHeader={() => '课程提供方信息'}>
               <InputItem
                 placeholder=""
-                value={this.state.place}
-                onChange={val=>this.setState({place: val})}
+                value={this.state.providerName}
+                onChange={val=>this.setState({providerName: val})}
               >用户名</InputItem>
               <InputItem
                 placeholder=""
-                value={this.state.place}
-                onChange={val=>this.setState({place: val})}
+                value={this.state.providerWechat}
+                onChange={val=>this.setState({providerWechat: val})}
               >微信名</InputItem>
               <InputItem
                 placeholder=""
-                value={this.state.place}
-                onChange={val=>this.setState({place: val})}
+                value={this.state.providerPhone}
+                onChange={val=>this.setState({providerPhone: val})}
               >手机号</InputItem>
             </List>
           </div>
