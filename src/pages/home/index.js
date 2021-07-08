@@ -4,6 +4,9 @@ import cns from 'classnames';
 import request from '../../utils/request';
 import { ListView } from 'antd-mobile';
 import missingImg from '../../assets/missing.jpg';
+import { connect } from 'react-redux';
+import { withRouter } from 'react-router';
+
 
 class Home extends Component {
     constructor(props) {
@@ -13,7 +16,7 @@ class Home extends Component {
         });
         this.state = {
             activities: activities,
-
+            isLoading: true
         };
     }
 
@@ -28,7 +31,8 @@ class Home extends Component {
         }).then((res) => {
             if (res.data.state === 'SUCCESS') {
                 this.setState({
-                    activities: this.state.activities.cloneWithRows(res.data.data.content)
+                    activities: this.state.activities.cloneWithRows(res.data.data.content),
+                    isLoading: false
                 });
             } 
         });
@@ -47,7 +51,7 @@ class Home extends Component {
     }
 
     _jumpToDetailPage () {
-
+      this.props.history.push('/detail');
     }
 
     render() {
@@ -98,5 +102,12 @@ class Home extends Component {
       }
 }
 
+function mapStateToProps(state) {
+  const { session } = state;
+  return {
+      session
+  };
+}
+export default connect(mapStateToProps)(withRouter(Home));
 
-export default Home;
+

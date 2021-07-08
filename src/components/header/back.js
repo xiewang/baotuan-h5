@@ -21,11 +21,11 @@ class Header extends Component {
             <NavBar
             mode="light"
             icon={<Icon type="left" />}
-            onLeftClick={() => console.log('onLeftClick')}
+            onLeftClick={() => this.props.onLeftClick && this.props.onLeftClick() || this.props.history.goBack() }
             rightContent={[
               <Icon key="1" type="ellipsis" />,
             ]}
-          >NavBar</NavBar>
+          >{this.props.title ||''}</NavBar>
         )
     }
 }

@@ -4,8 +4,10 @@ import {
     Route,
     Switch
 } from 'react-router-dom';
+import CacheRoute, { CacheSwitch } from 'react-router-cache-route';
 import Entry from '../pages/entry';
 import Login from '../pages/login';
+import Detail from '../pages/detail';
 import NoMatch from '../pages/failure/404';
 
 class BDRouter extends Component {
@@ -21,11 +23,14 @@ class BDRouter extends Component {
         return (
             <Router>
                 <div>
-                    <Switch>
-                        <Route path="/" exact component={Entry}/>
-                        <Route path="/Entry" exact component={Entry}/>
-                        <Route component={NoMatch} />
-                    </Switch>
+                    <CacheSwitch>
+                        <CacheRoute path="/" exact component={Entry}/>
+                        <CacheRoute path="/entry" exact component={Entry}/>
+                        <Route path="/detail" exact component={Detail}/>
+                        <Route path="*">
+                            <NoMatch />
+                        </Route>
+                    </CacheSwitch>
                 </div>
             </Router>
         );
