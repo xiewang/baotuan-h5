@@ -17,6 +17,8 @@ import Header from '../../components/header';
 import Home from '../home';
 import My from '../my';
 import Push from '../push';
+import {getToken} from '../../utils/auth';
+import { withRouter } from 'react-router';
 
 class Entry extends Component {
     constructor(props) {
@@ -46,7 +48,17 @@ class Entry extends Component {
                 }
           </div>
         );
-      }
+    }
+
+    _switchTab(tab) {
+        if (tab === 2 && !getToken()) {
+            this.props.history.push('/login');
+            return;
+        }
+        this.setState({
+            selectedTab: tab,
+        });
+    }
     
     render() {
        
@@ -68,11 +80,7 @@ class Entry extends Component {
                         selectedIcon={<Icon type="search" size={'md'} />
                         }
                         selected={this.state.selectedTab === 0}
-                        onPress={() => {
-                        this.setState({
-                            selectedTab: 0,
-                        });
-                        }}
+                        onPress={() => this._switchTab(0)}
                     >
                         {this.renderContent('home')}
                     </TabBar.Item>
@@ -84,11 +92,7 @@ class Entry extends Component {
                         selectedIcon={<Icon type="plus" size={'md'} />
                         }
                         selected={this.state.selectedTab === 1}
-                        onPress={() => {
-                        this.setState({
-                            selectedTab: 1,
-                        });
-                        }}
+                        onPress={() => this._switchTab(1)}
                     >
                         {this.renderContent('push')}
                     </TabBar.Item>
@@ -100,11 +104,7 @@ class Entry extends Component {
                         selectedIcon={<Icon type="check-circle" size={'md'} />
                         }
                         selected={this.state.selectedTab === 2}
-                        onPress={() => {
-                        this.setState({
-                            selectedTab: 2,
-                        });
-                        }}
+                        onPress={() => this._switchTab(2)}
                     >
                         {this.renderContent('my')}
                     </TabBar.Item>
@@ -130,4 +130,4 @@ function mapDispatchToProps(dispatch, ownProps) {
     }, dispatch);
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Entry);
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(Entry));

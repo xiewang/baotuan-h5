@@ -28,7 +28,7 @@ class Detail extends Component {
               title="活动详情"
               {...this.props}
             />
-            <span>x</span>
+            <span>testxx</span>
           </div>
         );
       }

@@ -21,7 +21,7 @@ class Header extends Component {
         return (
             <NavBar
                 mode="light"
-                icon={<img src={logo} className={styles.logo}/>}
+                icon={<img src={logo} alt={'香香树'} className={styles.logo}/>}
                 rightContent={[
                 <Icon key="1" type="ellipsis" />,
                 ]}

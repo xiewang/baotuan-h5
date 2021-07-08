@@ -12,7 +12,7 @@ class NoMatch extends Component {
 
     render() {
         return (
-            <div>页面消失了</div>
+            <div>发生未知错误</div>
         );
     }
 }

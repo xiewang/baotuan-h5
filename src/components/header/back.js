@@ -14,6 +14,13 @@ class Header extends Component {
 
     }
 
+    _leftClick() {
+      if (this.props.onLeftClick) {
+        this.props.onLeftClick();
+        return;
+      }
+      this.props.history.goBack();
+    }
     
     render() {
        
@@ -21,7 +28,7 @@ class Header extends Component {
             <NavBar
             mode="light"
             icon={<Icon type="left" />}
-            onLeftClick={() => this.props.onLeftClick && this.props.onLeftClick() || this.props.history.goBack() }
+            onLeftClick={() => this._leftClick() }
             rightContent={[
               <Icon key="1" type="ellipsis" />,
             ]}
