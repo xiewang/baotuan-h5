@@ -29,9 +29,6 @@ class Header extends Component {
             mode="light"
             icon={<Icon type="left" />}
             onLeftClick={() => this._leftClick() }
-            rightContent={[
-              <Icon key="1" type="ellipsis" />,
-            ]}
           >{this.props.title ||''}</NavBar>
         )
     }

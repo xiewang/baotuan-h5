@@ -1,16 +1,11 @@
 import React, { Component } from 'react';
-import {
-    Link
-} from 'react-router-dom';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { update } from '../../actions/session';
 import styles from './styles.module.css';
-import cns from 'classnames';
 import { 
     TabBar,
     Icon,
-    WingBlank,
     WhiteSpace
  } from 'antd-mobile';
 import Header from '../../components/header';

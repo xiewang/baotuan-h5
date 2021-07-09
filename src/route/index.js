@@ -5,7 +5,7 @@ import {
     Switch
 } from 'react-router-dom';
 import { withRouter } from 'react-router';
-import CacheRoute, { CacheSwitch } from 'react-router-cache-route';
+// import CacheRoute, { CacheSwitch } from 'react-router-cache-route';
 import Entry from '../pages/entry';
 import Login from '../pages/login';
 import Detail from '../pages/detail';
@@ -16,10 +16,29 @@ import './transition.css';
 class XXTRouter extends Component {
     constructor(props) {
         super(props);
-        this.state = {};
+        this.state = {
+            entryClass: 'home-base home-show'
+        };
     }
 
     componentDidMount() {
+    }
+
+    _renderEntryChildren(props) {
+        const { match } = props;
+        if (match) {
+            this.state.entryClass = 'home-base home-show';
+        } else {
+            this.state.entryClass = 'home-base home-hide';
+            setTimeout(()=>{
+                document.getElementsByClassName("home-base home-hide")[0].setAttribute("class", 'home-base home-hide hide')
+            }, 500)
+        }
+        return (
+            <div  className={this.state.entryClass}> 
+                <Entry {...this.props}/>
+            </div>
+        )
     }
 
     render() {
@@ -27,17 +46,9 @@ class XXTRouter extends Component {
             PUSH: 'forward',
             POP: 'back'
         }
-        const renderChildren = (props, component) => {
-            const { match } = props;
-            return (
-                <div  className={[match?'home-base home-show' :'home-base1 home-hide']}> 
-                    {component}
-                </div>
-            )
-          }
+
         const Routes = withRouter(({location, history}) => (
             <TransitionGroup className={'transition-group'}>
-                
                 <CSSTransition appear={true}  key={location.key} timeout={800} classNames={ANIMATION_MAP[history.action]}>
                 <Switch  location={location}>
                     <Route path="/" exact children={()=><div/>}/>
@@ -52,7 +63,7 @@ class XXTRouter extends Component {
           ));
         return (
             <Router>
-                <Route path="/" exact children={(props)=>renderChildren(props, <Entry/>)}/>
+                <Route path="/" exact children={props=>this._renderEntryChildren(props)}/>
                 <Routes/>
             </Router>
         );

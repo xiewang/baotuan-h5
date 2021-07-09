@@ -15,7 +15,6 @@ class Header extends Component {
 
     }
 
-    
     render() {
        
         return (
@@ -23,7 +22,6 @@ class Header extends Component {
                 mode="light"
                 icon={<img src={logo} alt={'香香树'} className={styles.logo}/>}
                 rightContent={[
-                <Icon key="1" type="ellipsis" />,
                 ]}
             >香香树</NavBar>
         )

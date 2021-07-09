@@ -28,7 +28,7 @@ class Detail extends Component {
               title="活动详情"
               {...this.props}
             />
-            <span>testxx</span>
+            <span onClick={()=>{alert('s')}}>testxx</span>
           </div>
         );
       }
