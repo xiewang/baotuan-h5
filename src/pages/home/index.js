@@ -34,14 +34,6 @@ class Home extends Component {
     }
 
     _getList() {
-      // const data = window.sessionStorage.getItem('activities');
-      // if (data) {
-      //   this.setState({
-      //     activities: this.state.activities.cloneWithRows(JSON.parse(data)),
-      //     isLoading: false
-      //   });
-      //   return;
-      // }
       request({
           url:'/activity/getAll',
           method:'get'
@@ -51,7 +43,6 @@ class Home extends Component {
                   activities: this.state.activities.cloneWithRows(res.data.data.content),
                   isLoading: false
               });
-              // window.sessionStorage.setItem('activities', JSON.stringify(res.data.data.content));
           } 
       });
     }
@@ -68,8 +59,8 @@ class Home extends Component {
         );
     }
 
-    _jumpToDetailPage () {
-      this.props.history.push('/detail');
+    _jumpToDetailPage (data) {
+      this.props.history.push('/detail', data);
     }
 
     render() {
@@ -94,7 +85,7 @@ class Home extends Component {
                   <div className={styles.contentRight}>
                     <div className={styles.description}>{rowData.activityName}</div>
                     <div className={cns(styles.contentLine, styles.buttonLine)}>
-                        <div className={styles.button} onClick={()=>this._jumpToDetailPage()}><span>马上拼课</span></div>
+                        <div className={styles.button} onClick={()=>this._jumpToDetailPage(rowData)}><span>马上拼课</span></div>
                     </div>
                   </div>
                 </div>

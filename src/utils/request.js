@@ -28,7 +28,11 @@ service.interceptors.response.use(
     response => {
         const responseData = response.data;
         const state = responseData.state;
-        
+        let headers = response.headers
+        let token = headers['x-auth-token'] || ''
+        if (token) {
+            response.data.token = token;
+        }
         if (state !== 'SUCCESS') {
             Toast.fail(responseData.resultErrorMessage || '请求失败');
             return Promise.reject(responseData || 'Error');
