@@ -9,13 +9,18 @@ const service = axios.create({
      || 'http://api.xiangxiangshu.com/', 
     timeout: 15000 
 })
+
+axios.defaults.withCredentials = false
+
 // request interceptor
 service.interceptors.request.use(
     config => {
         if (getToken()) {
             config.headers.common['X-Auth-Token'] = getToken();
         }
-        config.headers['Content-Type'] = 'application/json';
+        if (!config.headers['Content-Type']) {
+            config.headers['Content-Type'] = 'application/json';
+        }
         return config
     },
     error => {

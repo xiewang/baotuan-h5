@@ -3,9 +3,13 @@ body {
   padding: 0;
   font: 12px/18px  MarketSans, "Helvetica Neue", Helvetica, Roboto, Arial, sans-serif;
   color: #666;
+  font-size: 13px;
 }
 
 html, body, ul, li, ol, dl, dd, dt, p, h1, h2, h3, h4, h5, h6, form, fieldset, legend, img {
   margin: 0;
   padding: 0;
+}
+.am-tab-bar-bar .am-tab-bar-tab-title {
+  font-size: 12px;
 }

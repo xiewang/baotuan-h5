@@ -38,10 +38,12 @@ class Login extends Component {
                 'Content-Type': 'multipart/form-data'
             }
         }).then((res) => {
-            if (res.data.state === 'SUCCESS') {
+            if (res.data.state === 'SUCCESS' && res.data.token) {
                 setToken(res.data.token);
                 Toast.info('登录成功');
                 this._back();
+            } else {
+                Toast.info('登录失败');
             } 
         });
     }

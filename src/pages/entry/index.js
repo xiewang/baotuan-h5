@@ -94,6 +94,7 @@ class Entry extends Component {
                         {this.renderContent('home')}
                     </TabBar.Item>
                     <TabBar.Item
+                    style={{fontSize: 13}}
                         title="发布"
                         key="push"
                         icon={<Icon type="plus" size={'md'} />

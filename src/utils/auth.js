@@ -1,6 +1,6 @@
 import Cookies from 'js-cookie'
 
-const TokenKey = 'X-Auth-Token'
+const TokenKey = 'xxtreeToken'
 
 export function getToken() {
   return Cookies.get(TokenKey)
