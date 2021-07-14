@@ -11,6 +11,7 @@ import {
  } from 'antd-mobile';
 import cns from 'classnames';
 import request from '../../utils/request';
+import {setToken} from '../../utils/auth';
 
 class Login extends Component {
     constructor(props) {
@@ -38,6 +39,7 @@ class Login extends Component {
             }
         }).then((res) => {
             if (res.data.state === 'SUCCESS') {
+                setToken(res.data.token);
                 Toast.info('登录成功');
                 this._back();
             } 

@@ -13,7 +13,7 @@ const service = axios.create({
 service.interceptors.request.use(
     config => {
         if (getToken()) {
-            config.headers.common['X-App-Token'] = getToken();
+            config.headers.common['X-Auth-Token'] = getToken();
         }
         config.headers['Content-Type'] = 'application/json';
         return config

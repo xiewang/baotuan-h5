@@ -23,7 +23,7 @@ class Header extends Component {
                 icon={<img src={logo} alt={'香香树'} className={styles.logo}/>}
                 rightContent={[
                 ]}
-            >香香树</NavBar>
+            >{this.props.title || '香香树'}</NavBar>
         )
     }
 }

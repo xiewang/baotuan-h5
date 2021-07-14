@@ -19,7 +19,8 @@ class Entry extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            selectedTab: 0
+            selectedTab: 0,
+            title: '香香树'
         };
     }
 
@@ -46,12 +47,23 @@ class Entry extends Component {
     }
 
     _switchTab(tab) {
-        if (tab === 2 && !getToken()) {
+        let title = '香香树';
+        if (tab === 0) {
+            title = '香香树';
+        }
+        if (tab === 1) {
+            title = '发布';
+        }
+        if (tab === 2) {
+            title = '我的';
+        }
+        if ((tab === 2 || tab === 1)&& !getToken()) {
             this.props.history.push('/login');
             return;
         }
         this.setState({
             selectedTab: tab,
+            title: title
         });
     }
     
@@ -59,7 +71,9 @@ class Entry extends Component {
        
         return (
           <div className={styles.container}>
-            <Header/>
+            <Header 
+                title={this.state.title}
+            />
             <div className={styles.content}>
                 <TabBar
                     unselectedTintColor="#949494"

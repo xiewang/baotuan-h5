@@ -26,7 +26,7 @@ class AuthorizedRoute extends Component {
             <Route {...rest} render={props => {
                     let page = null;
                     const Page = this.props.component;
-                    if (!token) {
+                    if (token) {
                         page = <Page/>;
                     } else {
                         page = <Login {...props}/>

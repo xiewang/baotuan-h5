@@ -9,6 +9,7 @@ import { withRouter } from 'react-router';
 import Entry from '../pages/entry';
 import Login from '../pages/login';
 import Detail from '../pages/detail';
+import Audit from '../pages/audit';
 import NoMatch from '../pages/failure/404';
 import AuthorizedRoute from './AuthorizedRoute';
 import {TransitionGroup, CSSTransition} from 'react-transition-group';
@@ -52,8 +53,9 @@ class XXTRouter extends Component {
                 <CSSTransition appear={true}  key={location.key} timeout={800} classNames={ANIMATION_MAP[history.action]}>
                 <Switch  location={location}>
                     <Route path="/" exact children={()=><div/>}/>
-                    <AuthorizedRoute path="/detail" exact component={Detail}/>
+                    <Route path="/detail" exact component={Detail}/>
                     <Route path="/login" exact component={Login}/>
+                    <AuthorizedRoute path="/audit" exact component={Audit}/>
                     <Route path="*">
                         <NoMatch />
                     </Route>
