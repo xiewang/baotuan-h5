@@ -2,14 +2,15 @@ import React, { Component } from 'react';
 import styles from './styles.module.css';
 import cns from 'classnames';
 import request from '../../utils/request';
-
 import { 
   InputItem,
   List,
   Button,
   ImagePicker,
   Flex,
-  Toast
+  Toast,
+  DatePicker,
+  TextareaItem
 } from 'antd-mobile';
 
 class Push extends Component {
@@ -17,18 +18,19 @@ class Push extends Component {
         super(props);
         this._setImage = this._setImage.bind(this);
         this.state = {
-          activityName: "",
-          location: "",
-          price: "",
-          createTime: "",
-          activityTime: "",
-          updateTime: "",
-          userId: "",
-          description: "",
+          activityName: '',
+          location: '',
+          price: '',
+          createTime: '',
+          activityStartTime: '',
+          activityEndTime: '',
+          updateTime: '',
+          userId: '',
+          description: '',
           volume: 10,
-          providerWechat: "",
-          providerName: "",
-          providerPhone: "",
+          providerWechat: '',
+          providerName: '',
+          providerPhone: '',
           image: []
         };
     }
@@ -55,7 +57,8 @@ class Push extends Component {
         location: this.state.location,
         price: this.state.price,
         createTime: this.state.createTime,
-        activityTime: this.state.activityTime,
+        activityStartTime: this.state.activityStartTime,
+        activityEndTime: this.state.activityEndTime,
         updateTime: this.state.updateTime,
         userId: this.state.userId,
         description: this.state.description,
@@ -114,23 +117,36 @@ class Push extends Component {
               <InputItem
                 placeholder=""
                 value={this.state.price}
+                type="number"
                 onChange={val=>this.setState({price: val})}
               >价格</InputItem>
-              <InputItem
-                placeholder=""
-                value={this.state.activtiyTime}
-                onChange={val=>this.setState({activtiyTime: val})}
-              >时间</InputItem>
+              <DatePicker
+                value={this.state.activityStartTime}
+                onChange={date => this.setState({ activityStartTime: date})}
+              >
+                <List.Item arrow="horizontal">开始时间</List.Item>
+              </DatePicker>
+              <DatePicker
+                value={this.state.activityEndTime}
+                onChange={date => this.setState({ activityEndTime: date})}
+              >
+                <List.Item arrow="horizontal">结束时间</List.Item>
+              </DatePicker>
+             
               <InputItem
                 placeholder=""
                 value={this.state.volume}
+                type="number"
                 onChange={val=>this.setState({volume: val})}
               >人数</InputItem>
-              <InputItem
-                placeholder=""
+              <TextareaItem
+                title="其他说明"
+                autoHeight
                 value={this.state.description}
                 onChange={val=>this.setState({description: val})}
-              >其他说明</InputItem>
+                labelNumber={5}
+                rows={3}
+              />
             </List>
           </div>
           {/* <div className={styles.section}>
@@ -155,7 +171,7 @@ class Push extends Component {
           <div className={styles.section}>
             <List renderHeader={() => '课程提供方信息'}>
               <InputItem
-                placeholder=""
+                placeholder="香香树用户名"
                 value={this.state.providerName}
                 onChange={val=>this.setState({providerName: val})}
               >用户名</InputItem>
