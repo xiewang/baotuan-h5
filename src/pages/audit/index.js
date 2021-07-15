@@ -51,7 +51,7 @@ class Home extends Component {
         url = '/activity/getMyAll';
       }
       if (this.state.type === 'myRegister') {
-        url = '/activity/getMyAllRegiter';
+        url = '/activity/getMyAllRegister';
       }
       if (this.state.type === 'audit') {
         url = '/activity/getAllAudit';

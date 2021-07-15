@@ -16,4 +16,29 @@
    width:  calc(100vw - 24px);
    height: 150px;
 }
+.button {
+   background-color:#299903;
+   width: 120px;
+   height: 40px;
+   line-height: 40px;
+   border-radius: 10px;
+   text-align: center;
+   color: #fff;
+}
+.redButton {
+   background-color:#ff0101;
+   width: 120px;
+   height: 40px;
+   line-height: 40px;
+   border-radius: 10px;
+   text-align: center;
+   color: #fff;
+}
+.buttonLine {
+   width: 100%;
+   display: flex;
+   justify-content: flex-end;
+   align-items: center;
+   margin-top: 10px;
+}
 
