@@ -35,8 +35,8 @@ class My extends Component {
       });
     }
 
-    _jumpToActivityListPage() {
-      this.props.history.push('/audit');
+    _jumpToActivityListPage(type) {
+      this.props.history.push('/audit', type);
     }
     
     render() {
@@ -54,12 +54,16 @@ class My extends Component {
              
             </div>
             <div className={styles.content}>
-              <div className={styles.line} onClick={()=>this._jumpToActivityListPage()}>
+              <div className={styles.line} onClick={()=>this._jumpToActivityListPage('myPush')}>
                 <span>我发布的课程</span>
                 <Icon type="right" size={'md'} />
               </div>
-              <div className={styles.line} onClick={()=>this._jumpToActivityListPage()}>
+              <div className={styles.line} onClick={()=>this._jumpToActivityListPage('myRegister')}>
                 <span>我参与的课程</span>
+                <Icon type="right" size={'md'} />
+              </div>
+              <div className={styles.line} onClick={()=>this._jumpToActivityListPage('audit')}>
+                <span>需审核的课程</span>
                 <Icon type="right" size={'md'} />
               </div>
             </div>

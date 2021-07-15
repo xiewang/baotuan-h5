@@ -6,7 +6,7 @@ import { ListView } from 'antd-mobile';
 import missingImg from '../../assets/missing.jpg';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
-
+import Header from "../../components/header/back";
 
 class Home extends Component {
     constructor(props) {
@@ -17,25 +17,47 @@ class Home extends Component {
         this.state = {
             activities: activities,
             isLoading: true,
-            location: '/'
+            type: 'myPush',
+            title: '我发布的课程'
         };
     }
 
     componentDidMount() {
-        this._getList();
+      let title = '';
+      if (this.props.location.state === 'myPush') {
+        title = '我发布的课程';
+      }
+      if (this.props.location.state === 'myRegister') {
+        title = '我参与的课程';
+      }
+      if (this.props.location.state === 'audit') {
+        title = '需审核的课程';
+      }
+      this.state.type = this.props.location.state;
+      this.setState({
+        type: this.props.location.state,
+        title: title
+      });
+      this._getList();
     }
 
     shouldComponentUpdate(nextProps, nextState) {
-      if (nextProps.location.pathname !== this.state.location) {
-        return false;
-      }
       return true;
-
     }
 
     _getList() {
+      let url = '/activity/getAll';
+      if (this.state.type === 'myPush') {
+        url = '/activity/getMyAll';
+      }
+      if (this.state.type === 'myRegister') {
+        url = '/activity/getMyAllRegiter';
+      }
+      if (this.state.type === 'audit') {
+        url = '/activity/getAllAudit';
+      }
       request({
-          url:'/activity/getAll',
+          url: url,
           method:'get'
       }).then((res) => {
           if (res.data.state === 'SUCCESS') {
@@ -94,6 +116,7 @@ class Home extends Component {
           };
         return (
           <div className={styles.container}>
+            <Header title={this.state.title} {...this.props} />
             <ListView
                 ref={el => this.lv = el}
                 dataSource={this.state.activities}
