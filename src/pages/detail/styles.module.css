@@ -41,4 +41,31 @@
    align-items: center;
    margin-top: 10px;
 }
-
+.detail {
+   width: 100%;
+   flex-direction: column;
+   justify-content: flex-start;
+   align-items: center;
+   border-bottom: 1px solid #d5d5d5;
+   padding-bottom: 10px;
+}
+.title {
+   font-size: 16px;
+   color: #333;
+   margin-top: 8px;
+}
+.title1 {
+   margin-top: 4px;
+   font-size: 13px;
+   color: #666;
+}
+.users {
+   padding: 6px 0;
+   flex-flow: wrap;
+   display: flex;
+}
+.users span {
+   color: rgb(45, 111, 255);
+   font-size: 13px;
+   margin-right: 4px;
+}

@@ -13,7 +13,12 @@ class Detail extends Component {
 		super(props);
 		this.state = {
 			activity: {},
-			hasRegister: false
+			hasRegister: false,
+			activityUsers: [
+				{
+					name: 'test'
+				}
+			]
 		};
 	}
 
@@ -23,6 +28,7 @@ class Detail extends Component {
 		});
 		this.state.activity = this.props.location.state;
 		this._getRegisterStatus();
+		this._getRegisterUsers();
 	}
 
 	_register() {
@@ -63,6 +69,19 @@ class Detail extends Component {
         });
 	}
 
+	_getRegisterUsers() {
+		request({
+            method:'post',
+            url:'/activity/users?activityId='+this.state.activity.activityId,
+        }).then((res) => {
+            if (res.data.state === 'SUCCESS' && res.data.data) {
+                this.setState({
+					activityUsers: res.data.data.content
+				})
+            }
+        });
+	}
+
 	render() {
 		return (
 			<div className={styles.container}>
@@ -70,6 +89,46 @@ class Detail extends Component {
 				<div className={styles.content}>
 					<div className={styles.iamge}>
 						<img alt={this.state.activity.name} src={this.state.activity.picLink}/>
+					</div>
+					<div className={styles.detail}>
+						<div className={styles.title}>
+							<span>{this.state.activity.activityName}</span>
+						</div>
+						<div className={styles.title1}>
+							<span>活动时间：</span><span>{this.state.activity.activityStartTime}</span>
+						</div>
+						<div className={styles.title1}>
+							<span>活动地点：</span><span>{this.state.activity.place}</span>
+						</div>
+						<div className={styles.title1}>
+							<span>费用：</span><span>{this.state.activity.price}元/次</span>
+						</div>
+						<div className={styles.title1}>
+							<span>拼课人数：</span><span>{this.state.activity.volume}</span>
+						</div>
+						<div className={styles.title1}>
+							<span>发布者：</span><span>{this.state.activity.userId}</span>
+						</div>
+						<div className={styles.title1}>
+							<span>课程提供方：</span><span>{this.state.activity.providerName}</span>
+						</div>
+						<div className={styles.title1}>
+							<span>课程详情：</span><span>{this.state.activity.description}</span>
+						</div>
+					</div>
+					<div className={styles.detail}>
+						<div className={styles.title}>
+							<span>拼课人员</span>
+						</div>
+						<div className={styles.users}>
+							{
+								this.state.activityUsers.map(v=>{
+									return (
+										<span>{v.name}</span>
+									)
+								})
+							}
+						</div>
 					</div>
 					<div className={styles.buttonLine}>
 						{
