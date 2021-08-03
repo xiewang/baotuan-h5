@@ -3,10 +3,9 @@ import styles from './styles.module.css';
 import cns from 'classnames';
 import request from '../../utils/request';
 import { ListView } from 'antd-mobile';
-import missingImg from '../../assets/missing.jpg';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
-
+import Activity from '../../components/activity';
 
 class Home extends Component {
     constructor(props) {
@@ -59,10 +58,6 @@ class Home extends Component {
         );
     }
 
-    _jumpToDetailPage (data) {
-      this.props.history.push('/detail', data);
-    }
-
     render() {
         const separator = (sectionID, rowID) => (
             <div
@@ -74,24 +69,8 @@ class Home extends Component {
             />
           );
         const row = (rowData, sectionID, rowID) => {
-            if (rowData.picLink.indexOf('.com')<0) {
-                rowData.picLink = missingImg
-            }
-            return (
-              <div key={rowID} style={{ padding: '0 15px' }}>
-                <div className={styles.title}>{rowData.activityName}</div>
-                <div className={styles.content}>
-                  <img className={styles.img} src={rowData.picLink  } alt="" />
-                  <div className={styles.contentRight}>
-                    <div className={styles.description}>{rowData.activityName}</div>
-                    <div className={cns(styles.contentLine, styles.buttonLine)}>
-                        <div className={styles.button} onClick={()=>this._jumpToDetailPage(rowData)}><span>马上拼课</span></div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            );
-          };
+          return (<Activity rowData={rowData} rowID={rowID} {...this.props}/>)
+        };
         return (
           <div className={styles.container}>
             <ListView
