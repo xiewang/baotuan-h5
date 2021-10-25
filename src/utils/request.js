@@ -6,7 +6,7 @@ import { getToken } from "./auth";
 const service = axios.create({
     baseURL: (process.env.NODE_ENV === 'development')
      && 'http://localhost:8080/'
-     || 'http://api.xiangxiangshu.com/', 
+     || 'http://39.105.139.200:8080/', 
     timeout: 15000 
 })
 
