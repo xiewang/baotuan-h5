@@ -13,6 +13,7 @@ import Audit from '../pages/audit';
 import NoMatch from '../pages/failure/404';
 import AuthorizedRoute from './AuthorizedRoute';
 import {TransitionGroup, CSSTransition} from 'react-transition-group';
+import { weChatSDKInit } from '../utils/common';
 import './transition.css';
 class XXTRouter extends Component {
     constructor(props) {
@@ -23,6 +24,7 @@ class XXTRouter extends Component {
     }
 
     componentDidMount() {
+        weChatSDKInit();
     }
 
     _renderEntryChildren(props) {
