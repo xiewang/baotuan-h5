@@ -3,38 +3,92 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { update } from '../../actions/session';
 import styles from './styles.module.css';
-import { 
+import {
     Icon,
     InputItem,
     Button,
     Toast
- } from 'antd-mobile';
+} from 'antd-mobile';
 import cns from 'classnames';
 import request from '../../utils/request';
-import {setToken} from '../../utils/auth';
+import { setToken } from '../../utils/auth';
+import { weChatLogin, browser, getUrlParam } from '../../utils/common';
 
 class Login extends Component {
     constructor(props) {
         super(props);
         this.state = {
             username: '',
-            password: ''
+            password: '',
+            isWechatLogin: false
         };
     }
 
     componentDidMount() {
         // this.props.update({});
+        if (browser.versions.isWechat) {
+            weChatLogin(); //如果在微信中使用，登录页面直接跳转到微信授权页面
+        }
+        this._getWeChatCode();
     }
 
     _back() {
         this.props.history.goBack();
     }
 
+    _getWeChatCode() {
+        const code = getUrlParam('code');
+        if (code) {
+            this._weCahtLogin(code);
+            this.setState({
+                isWechatLogin: true
+            });
+        }
+    }
+
+    _weCahtLogin(code) {
+        request({
+            method: 'get',
+            url: '/user/weCahtLogin?code=' + code
+        }).then((res) => {
+            if (res.data.state === 'SUCCESS' && res.data.token) {
+                setToken(res.data.token);
+                Toast.info('登录成功');
+                this._back();
+            } else {
+                Toast.info('登录失败');
+                this.setState({
+                    isWechatLogin: false
+                });
+            }
+        });
+    }
+
+    // _getWechatInfo(weChatToken) { //集成在后端做
+    //     fetch('https://api.weixin.qq.com/sns/userinfo?access_token=' + weChatToken + '&openid=OPENID&lang=zh_CN', {
+    //         method: 'GET',
+    //         headers: {
+    //             'Accept': 'application/json',
+    //         },
+    //     }).then((response) => {
+    //         if (response.ok) {
+    //             return response.json();
+    //         }
+    //     }).then((responseJson) => {
+    //         if (responseJson) {
+    //             this.weChatInfo = responseJson;
+    //             this._lgoinWithWechatId(this.weChatInfo);
+    //         }
+
+    //     }).catch((error) => { });
+    // }
+
+
     _login() {
         request({
-            method:'post',
-            url:'/user/login?name='+this.state.username+'&password='+this.state.password,
-            headers:{
+            method: 'post',
+            url: '/user/login?name=' + this.state.username + '&password=' + this.state.password,
+            headers: {
                 'Content-Type': 'multipart/form-data'
             }
         }).then((res) => {
@@ -44,7 +98,7 @@ class Login extends Component {
                 this._back();
             } else {
                 Toast.info('登录失败');
-            } 
+            }
         });
     }
 
@@ -52,27 +106,34 @@ class Login extends Component {
         return (
             <div className={styles.container}>
 
-                <div className={styles.close} onClick={()=>this._back()}>
+                <div className={styles.close} onClick={() => this._back()}>
                     <Icon type="cross" size={'lg'} />
                 </div>
-                <div className={styles.form}>
-                    <InputItem
-                        className={styles.formInput}
-                        placeholder="用户名"
-                        value={this.state.username}
-                        onChange={val=>this.setState({username: val})}
-                    >用户名</InputItem>
-                    <InputItem
-                        className={styles.formInput}
-                        placeholder="密码"
-                        type="password"
-                        value={this.state.password}
-                        onChange={val=>this.setState({password: val})}
-                    >密码</InputItem>
-                     <div className={styles.button}>
-                        <Button onClick={()=>this._login()} type="primary">登录</Button>
-                    </div>
-                </div>
+                {
+                    this.state.isWechatLogin ? (
+                        <div><span>微信登录中...</span></div>
+                    ) : (
+                        <div className={styles.form}>
+                            <InputItem
+                                className={styles.formInput}
+                                placeholder="用户名"
+                                value={this.state.username}
+                                onChange={val => this.setState({ username: val })}
+                            >用户名</InputItem>
+                            <InputItem
+                                className={styles.formInput}
+                                placeholder="密码"
+                                type="password"
+                                value={this.state.password}
+                                onChange={val => this.setState({ password: val })}
+                            >密码</InputItem>
+                            <div className={styles.button}>
+                                <Button onClick={() => this._login()} type="primary">登录</Button>
+                            </div>
+                        </div>
+                    )
+                }
+
             </div>
         );
     }

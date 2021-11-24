@@ -12,7 +12,7 @@ import Detail from '../pages/detail';
 import Audit from '../pages/audit';
 import NoMatch from '../pages/failure/404';
 import AuthorizedRoute from './AuthorizedRoute';
-import {TransitionGroup, CSSTransition} from 'react-transition-group';
+import { TransitionGroup, CSSTransition } from 'react-transition-group';
 import { weChatSDKInit } from '../utils/common';
 import './transition.css';
 class XXTRouter extends Component {
@@ -33,13 +33,13 @@ class XXTRouter extends Component {
             this.state.entryClass = 'home-base home-show';
         } else {
             this.state.entryClass = 'home-base home-hide';
-            setTimeout(()=>{
+            setTimeout(() => {
                 document.getElementsByClassName("home-base home-hide")[0].setAttribute("class", 'home-base home-hide hide')
             }, 500)
         }
         return (
-            <div  className={this.state.entryClass}> 
-                <Entry {...this.props}/>
+            <div className={this.state.entryClass}>
+                <Entry {...this.props} />
             </div>
         )
     }
@@ -50,25 +50,25 @@ class XXTRouter extends Component {
             POP: 'back'
         }
 
-        const Routes = withRouter(({location, history}) => (
+        const Routes = withRouter(({ location, history }) => (
             <TransitionGroup className={'transition-group'}>
-                <CSSTransition appear={true}  key={location.key} timeout={800} classNames={ANIMATION_MAP[history.action]}>
-                <Switch  location={location}>
-                    <Route path="/" exact children={()=><div/>}/>
-                    <Route path="/detail" exact component={Detail}/>
-                    <Route path="/login" exact component={Login}/>
-                    <AuthorizedRoute path="/audit" exact component={Audit}/>
-                    <Route path="*">
-                        <NoMatch />
-                    </Route>
-                </Switch>
+                <CSSTransition appear={true} key={location.key} timeout={800} classNames={ANIMATION_MAP[history.action]}>
+                    <Switch location={location}>
+                        <Route path="/" exact children={() => <div />} />
+                        <Route path="/detail" exact component={Detail} />
+                        <Route path="/login" exact component={Login} />
+                        <AuthorizedRoute path="/audit" exact component={Audit} />
+                        <Route path="*">
+                            <NoMatch />
+                        </Route>
+                    </Switch>
                 </CSSTransition>
             </TransitionGroup>
-          ));
+        ));
         return (
             <Router>
-                <Route path="/" exact children={props=>this._renderEntryChildren(props)}/>
-                <Routes/>
+                <Route path="/" exact children={props => this._renderEntryChildren(props)} />
+                <Routes />
             </Router>
         );
     }
