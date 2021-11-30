@@ -5,9 +5,9 @@ import { getToken } from "./auth";
 // create an axios instance
 const service = axios.create({
     baseURL: (process.env.NODE_ENV === 'development')
-     && 'http://localhost:8080/'
-     || 'http://39.105.139.200:8080/', 
-    timeout: 15000 
+        && 'http://localhost:8080/'
+        || 'http://39.105.139.200:8080/',
+    timeout: 15000
 })
 
 axios.defaults.withCredentials = false
@@ -38,6 +38,11 @@ service.interceptors.response.use(
         if (token) {
             response.data.token = token;
         }
+        if (state === 'REJECTED') {
+            // 清除cookie，重新登录
+            // TODO
+
+        }
         if (state !== 'SUCCESS') {
             Toast.fail(responseData.resultErrorMessage || '请求失败');
             return Promise.reject(responseData || 'Error');
@@ -46,16 +51,16 @@ service.interceptors.response.use(
         }
     },
     error => {
-        
-        if ((error && error.response && error.response.status === 403) 
-            && getToken() 
+
+        if ((error && error.response && error.response.status === 403)
+            && getToken()
             && error.response.data.path !== '/user/logout') {
-                //clear token
+            //clear token
         }
-        if ((error && error.response && error.response.status === 500) 
-            && getToken() 
+        if ((error && error.response && error.response.status === 500)
+            && getToken()
             && error.response.data.path !== '/user/logout') {
-                //clear token
+            //clear token
         }
         console.log(error);
         Toast.fail(error.message || '请求失败')
