@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { Toast } from 'antd-mobile';
-import { getToken } from "./auth";
+import { getToken, removeToken } from "./auth";
 
 // create an axios instance
 const service = axios.create({
@@ -41,6 +41,8 @@ service.interceptors.response.use(
         if (state === 'REJECTED') {
             // 清除cookie，重新登录
             // TODO
+            removeToken();
+            window.location.href = '/login';
 
         }
         if (state !== 'SUCCESS') {
