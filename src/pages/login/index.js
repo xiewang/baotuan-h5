@@ -39,6 +39,7 @@ class Login extends Component {
     _getWeChatCode() {
         const code = getUrlParam('code');
         if (code) {
+            alert(code);
             this._weCahtLogin(code);
             this.setState({
                 isWechatLogin: true
@@ -49,7 +50,7 @@ class Login extends Component {
     _weCahtLogin(code) {
         request({
             method: 'get',
-            url: '/user/weCahtLogin?code=' + code
+            url: '/user/weChatLogin?code=' + code
         }).then((res) => {
             if (res.data.state === 'SUCCESS' && res.data.token) {
                 setToken(res.data.token);
