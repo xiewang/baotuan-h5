@@ -40,7 +40,7 @@ class Login extends Component {
     _getWeChatCode() {
         const code = getUrlParam('code');
         if (code) {
-            this.setState({ code: code };)
+            this.setState({ code: code });
             alert(code);
             this._weCahtLogin(code);
             this.setState({
