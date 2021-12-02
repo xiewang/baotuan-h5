@@ -20,7 +20,8 @@ class Login extends Component {
         this.state = {
             username: '',
             password: '',
-            isWechatLogin: false
+            isWechatLogin: false,
+            code: ''
         };
     }
 
@@ -39,6 +40,7 @@ class Login extends Component {
     _getWeChatCode() {
         const code = getUrlParam('code');
         if (code) {
+            this.setState({ code: code };)
             alert(code);
             this._weCahtLogin(code);
             this.setState({
@@ -110,6 +112,7 @@ class Login extends Component {
                 <div className={styles.close} onClick={() => this._back()}>
                     <Icon type="cross" size={'lg'} />
                 </div>
+                {this.state.code}
                 {
                     this.state.isWechatLogin ? (
                         <div><span>微信登录中...</span></div>
