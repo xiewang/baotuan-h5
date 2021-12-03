@@ -27,10 +27,12 @@ class Login extends Component {
 
     componentDidMount() {
         // this.props.update({});
-        if (browser.versions.isWechat) {
+
+        if (browser.versions.isWechat && !this._getWeChatCode()) {
             weChatLogin(); //如果在微信中使用，登录页面直接跳转到微信授权页面
+        } else if (browser.versions.isWechat && this._getWeChatCode()) {
+            this._weCahtLogin(this._getWeChatCode()); // 拿到授权码
         }
-        this._getWeChatCode();
     }
 
     _back() {
@@ -40,13 +42,12 @@ class Login extends Component {
     _getWeChatCode() {
         const code = getUrlParam('code');
         if (code) {
-            this.setState({ code: code });
-            alert(code);
-            this._weCahtLogin(code);
             this.setState({
                 isWechatLogin: true
             });
+            return code;
         }
+        return null;
     }
 
     _weCahtLogin(code) {
@@ -66,26 +67,6 @@ class Login extends Component {
             }
         });
     }
-
-    // _getWechatInfo(weChatToken) { //集成在后端做
-    //     fetch('https://api.weixin.qq.com/sns/userinfo?access_token=' + weChatToken + '&openid=OPENID&lang=zh_CN', {
-    //         method: 'GET',
-    //         headers: {
-    //             'Accept': 'application/json',
-    //         },
-    //     }).then((response) => {
-    //         if (response.ok) {
-    //             return response.json();
-    //         }
-    //     }).then((responseJson) => {
-    //         if (responseJson) {
-    //             this.weChatInfo = responseJson;
-    //             this._lgoinWithWechatId(this.weChatInfo);
-    //         }
-
-    //     }).catch((error) => { });
-    // }
-
 
     _login() {
         request({

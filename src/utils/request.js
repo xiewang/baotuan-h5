@@ -53,7 +53,7 @@ service.interceptors.response.use(
     },
     error => {
 
-        if ((error && error.response && error.response.status === 403)
+        if ((error && error.response && (error.response.status === 403 || error.response.status === 401))
             && getToken()
             && error.response.data.path !== '/user/logout') {
             // 清除cookie，重新登录
