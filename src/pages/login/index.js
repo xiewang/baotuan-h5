@@ -58,7 +58,9 @@ class Login extends Component {
             if (res.data.state === 'SUCCESS' && res.data.token) {
                 setToken(res.data.token);
                 Toast.info('登录成功');
-                this._back();
+                setTimeout(() => {
+                    window.location.href = '/';
+                }, 1200);
             } else {
                 Toast.info('登录失败');
                 this.setState({

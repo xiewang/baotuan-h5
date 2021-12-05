@@ -19,6 +19,7 @@ class My extends Component {
   }
 
   _logout() {
+    alert('确定要登出吗？')
     logout();
   }
 
