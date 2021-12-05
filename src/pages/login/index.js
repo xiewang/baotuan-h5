@@ -20,7 +20,7 @@ class Login extends Component {
         this.state = {
             username: '',
             password: '',
-            isWechatLogin: false,
+            isWechatLogin: true,
             code: ''
         };
     }
@@ -46,6 +46,11 @@ class Login extends Component {
                 isWechatLogin: true
             });
             return code;
+        } else {
+            this.setState({
+                isWechatLogin: false
+            });
+            return null;
         }
         return null;
     }
