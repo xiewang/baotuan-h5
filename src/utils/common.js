@@ -1,3 +1,6 @@
+import { removeToken } from "./auth";
+import { update } from '../actions/session';
+
 const weChatSDKInit = () => {
     return new Promise((resolve, reject) => {
         wx.config({
@@ -90,11 +93,18 @@ const getUrlParam = (paramName) => {
     }
 }
 
+const logout = (history) => {
+    removeToken();
+    update(null);
+    window.location.href = '/';
+}
+
 export {
     weChatSDKInit,
     weChatMessageShare,
     weChatTimelineShare,
     weChatLogin,
     browser,
-    getUrlParam
+    getUrlParam,
+    logout
 }

@@ -76,6 +76,7 @@ class Entry extends Component {
             <div className={styles.container}>
                 <Header
                     title={this.state.title}
+                    history={this.props.history}
                 />
                 <div className={styles.content}>
                     <TabBar

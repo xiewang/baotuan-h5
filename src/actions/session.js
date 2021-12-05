@@ -1,11 +1,7 @@
 import types from '../constants/actions';
 
-export function update() {
+export function update(userInfo) {
     return dispatch => {
-        const userInfo = {
-            userId: 'test'
-        };
-
         dispatch({
             type: types.UPDATEUSERINFO,
             userInfo

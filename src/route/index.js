@@ -10,6 +10,7 @@ import Entry from '../pages/entry';
 import Login from '../pages/login';
 import Detail from '../pages/detail';
 import Audit from '../pages/audit';
+import Setting from '../pages/setting';
 import NoMatch from '../pages/failure/404';
 import AuthorizedRoute from './AuthorizedRoute';
 import { TransitionGroup, CSSTransition } from 'react-transition-group';
@@ -58,6 +59,7 @@ class XXTRouter extends Component {
                         <Route path="/detail" exact component={Detail} />
                         <Route path="/login" exact component={Login} />
                         <AuthorizedRoute path="/audit" exact component={Audit} />
+                        <AuthorizedRoute path="/setting" exact component={Setting} />
                         <Route path="*">
                             <NoMatch />
                         </Route>
