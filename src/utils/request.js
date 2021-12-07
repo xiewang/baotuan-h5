@@ -63,9 +63,7 @@ service.interceptors.response.use(
         if ((error && error.response && error.response.status === 500)
             && getToken()
             && error.response.data.path !== '/user/logout') {
-            // 清除cookie，重新登录
-            removeToken();
-            window.location.href = '/login';
+
         }
         console.log(error);
         Toast.fail(error.message || '请求失败')
