@@ -158,6 +158,7 @@ class Detail extends Component {
 							}
 						</div>
 					</div>
+
 					<div className={styles.buttonLine}>
 						{
 							this.state.hasRegister ? (
@@ -172,16 +173,21 @@ class Detail extends Component {
 						}
 
 						{
-							!this.state.hasAudited ? (
-								<div className={styles.redButton} onClick={() => this._audit()}>
-									<span>待审核</span>
-								</div>
-							) : (
-								<div className={styles.button} onClick={() => this._audit()}>
-									<span>审核通过</span>
-								</div>
+							this.props.session.userInfo.role === "0" && (
+
+								!this.state.hasAudited ? (
+									<div className={styles.redButton} onClick={() => this._audit()}>
+										<span>待审核</span>
+									</div>
+								) : (
+									<div className={styles.button} onClick={() => this._audit()}>
+										<span>审核通过</span>
+									</div>
+								)
+
 							)
 						}
+
 
 					</div>
 
