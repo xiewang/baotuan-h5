@@ -72,6 +72,28 @@ class Push extends Component {
       if (params[key])
         formData.append(key, params[key]);
     }
+
+    if (!this.state.activityName) {
+      Toast('请输入活动名');
+      return;
+    }
+    if (!this.state.price) {
+      Toast('请输入价格');
+      return;
+    }
+    if (!this.state.activityEndTime) {
+      Toast('请输入活动结束时间');
+      return;
+    }
+    if (!this.state.activityStartTime) {
+      Toast('请输入活动开始时间');
+      return;
+    }
+    if (this.state.volume <= 0) {
+      Toast('活动参团人数不能少于0个');
+      return;
+    }
+
     request({
       method: 'post',
       url: '/activity/insert',
