@@ -5,15 +5,16 @@ import request from "../../utils/request";
 import Header from "../../components/header/back";
 import { withRouter } from "react-router";
 import { connect } from "react-redux";
-import { 
-    Toast
- } from 'antd-mobile';
+import {
+	Toast
+} from 'antd-mobile';
 class Detail extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
 			activity: {},
 			hasRegister: false,
+			hasAudited: false,
 			activityUsers: [
 				{
 					name: 'test'
@@ -25,6 +26,7 @@ class Detail extends Component {
 	componentDidMount() {
 		this.setState({
 			activity: this.props.location.state,
+			hasAudited: this.props.location.state.status === 0 ? false : true
 		});
 		this.state.activity = this.props.location.state;
 		this._getRegisterStatus();
@@ -33,11 +35,11 @@ class Detail extends Component {
 
 	_register() {
 		request({
-            method:'post',
-            url:'/activity/register?activityId='+this.state.activity.activityId,
-        }).then((res) => {
-            if (res.data.state === 'SUCCESS') {
-                
+			method: 'post',
+			url: '/activity/register?activityId=' + this.state.activity.activityId,
+		}).then((res) => {
+			if (res.data.state === 'SUCCESS') {
+
 				this.setState({
 					hasRegister: !this.state.hasRegister
 				});
@@ -46,40 +48,66 @@ class Detail extends Component {
 				} else {
 					Toast.info('取消拼课成功');
 				}
-            } else {
+			} else {
 				if (this.state.hasRegister) {
 					Toast.info('拼课失败');
 				} else {
 					Toast.info('取消拼课失败');
 				}
-            } 
-        });
+			}
+		});
 	}
+
+	_audit() {
+		request({
+			method: 'post',
+			url: '/activity/audit?activityId=' + this.state.activity.activityId,
+		}).then((res) => {
+			if (res.data.state === 'SUCCESS') {
+				this.setState({
+					hasAudited: !this.state.hasAudited
+				});
+				if (!this.state.hasAudited) {
+					Toast.info('审核驳回');
+				} else {
+					Toast.info('通过审核，已上架');
+				}
+			} else {
+				if (!this.state.hasAudited) {
+					Toast.info('审核驳回');
+				} else {
+					Toast.info('通过审核，已上架');
+				}
+			}
+		});
+	}
+
+
 
 	_getRegisterStatus() {
 		request({
-            method:'post',
-            url:'/activity/registerStatus?activityId='+this.state.activity.activityId,
-        }).then((res) => {
-            if (res.data.state === 'SUCCESS' && res.data.data) {
-                this.setState({
+			method: 'post',
+			url: '/activity/registerStatus?activityId=' + this.state.activity.activityId,
+		}).then((res) => {
+			if (res.data.state === 'SUCCESS' && res.data.data) {
+				this.setState({
 					hasRegister: true
 				})
-            }
-        });
+			}
+		});
 	}
 
 	_getRegisterUsers() {
 		request({
-            method:'post',
-            url:'/activity/users?activityId='+this.state.activity.activityId,
-        }).then((res) => {
-            if (res.data.state === 'SUCCESS' && res.data.data) {
-                this.setState({
+			method: 'post',
+			url: '/activity/users?activityId=' + this.state.activity.activityId,
+		}).then((res) => {
+			if (res.data.state === 'SUCCESS' && res.data.data) {
+				this.setState({
 					activityUsers: res.data.data.content
 				})
-            }
-        });
+			}
+		});
 	}
 
 	render() {
@@ -88,7 +116,7 @@ class Detail extends Component {
 				<Header title="活动详情" {...this.props} />
 				<div className={styles.content}>
 					<div className={styles.iamge}>
-						<img alt={this.state.activity.name} src={this.state.activity.picLink}/>
+						<img alt={this.state.activity.name} src={this.state.activity.picLink} />
 					</div>
 					<div className={styles.detail}>
 						<div className={styles.title}>
@@ -122,7 +150,7 @@ class Detail extends Component {
 						</div>
 						<div className={styles.users}>
 							{
-								this.state.activityUsers.map(v=>{
+								this.state.activityUsers.map(v => {
 									return (
 										<span>{v.name}</span>
 									)
@@ -133,16 +161,28 @@ class Detail extends Component {
 					<div className={styles.buttonLine}>
 						{
 							this.state.hasRegister ? (
-								<div className={styles.redButton} onClick={()=>this._register()}>
+								<div className={styles.redButton} onClick={() => this._register()}>
 									<span>取消拼课</span>
 								</div>
 							) : (
-								<div className={styles.button} onClick={()=>this._register()}>
+								<div className={styles.button} onClick={() => this._register()}>
 									<span>马上拼课</span>
 								</div>
 							)
 						}
-						
+
+						{
+							!this.state.hasAudited ? (
+								<div className={styles.redButton} onClick={() => this._audit()}>
+									<span>待审核</span>
+								</div>
+							) : (
+								<div className={styles.button} onClick={() => this._audit()}>
+									<span>审核通过</span>
+								</div>
+							)
+						}
+
 					</div>
 
 				</div>
