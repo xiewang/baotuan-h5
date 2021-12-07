@@ -7,7 +7,7 @@ const service = axios.create({
     baseURL: (process.env.NODE_ENV === 'development')
         && 'http://localhost:8080/'
         || 'http://39.105.139.200:8080/',
-    timeout: 15000
+    timeout: 65000
 })
 
 axios.defaults.withCredentials = false

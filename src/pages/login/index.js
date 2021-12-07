@@ -18,7 +18,7 @@ class Login extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            username: '',
+            phone: '',
             password: '',
             isWechatLogin: true,
             code: ''
@@ -27,11 +27,14 @@ class Login extends Component {
 
     componentDidMount() {
         // this.props.update({});
-
         if (browser.versions.isWechat && !this._getWeChatCode()) {
             weChatLogin(); //如果在微信中使用，登录页面直接跳转到微信授权页面
         } else if (browser.versions.isWechat && this._getWeChatCode()) {
             this._weCahtLogin(this._getWeChatCode()); // 拿到授权码
+        } else {
+            this.setState({
+                isWechatLogin: false,
+            });
         }
     }
 
@@ -78,7 +81,7 @@ class Login extends Component {
     _login() {
         request({
             method: 'post',
-            url: '/user/login?name=' + this.state.username + '&password=' + this.state.password,
+            url: '/user/login?phone=' + this.state.phone + '&password=' + this.state.password,
             headers: {
                 'Content-Type': 'multipart/form-data'
             }
@@ -108,10 +111,10 @@ class Login extends Component {
                         <div className={styles.form}>
                             <InputItem
                                 className={styles.formInput}
-                                placeholder="用户名"
-                                value={this.state.username}
-                                onChange={val => this.setState({ username: val })}
-                            >用户名</InputItem>
+                                placeholder="手机号"
+                                value={this.state.phone}
+                                onChange={val => this.setState({ phone: val })}
+                            >手机号</InputItem>
                             <InputItem
                                 className={styles.formInput}
                                 placeholder="密码"
