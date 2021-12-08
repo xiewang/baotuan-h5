@@ -1,19 +1,22 @@
 .title {
-    line-height: 50px;
+    line-height: 36px;
     color: rgb(136, 136, 136);
-    font-size: 18px;
+    font-size: 16px;
     border-bottom: 1px solid rgb(246, 246, 246);
     justify-content: flex-start;
     display: flex;
+    background-image: linear-gradient(to right, #33a3f4 , #bee4ff);
+    color: #fff;
+    padding: 0 15px;
  }
  .img {
-    height: 64px;
+    /* height: 64px; */
     margin-right: 15px;
     width: 30%;
  }
  .content {
     display: flex;
-    padding: 15px 0px;
+    padding: 15px 15px;
  }
  .contentRight {
     display: flex;
@@ -21,6 +24,7 @@
     justify-content: space-between;
     align-items: flex-start ;
     width: 60%;
+    text-align: left;
  }
  .contentLine {
     display: flex;
@@ -31,12 +35,13 @@
  }
  .buttonLine {
     justify-content: flex-end;
+    margin-top: 10px;
  }
  .button {
     background-color:#299903;
     width: 80px;
-    height: 20px;
-    line-height: 20px;
+    height: 24px;
+    line-height: 24px;
     border-radius: 10px;
     text-align: center;
     color: #fff;

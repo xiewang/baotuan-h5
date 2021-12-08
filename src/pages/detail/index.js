@@ -8,6 +8,8 @@ import { connect } from "react-redux";
 import {
 	Toast
 } from 'antd-mobile';
+import moment from "moment";
+
 class Detail extends Component {
 	constructor(props) {
 		super(props);
@@ -16,9 +18,7 @@ class Detail extends Component {
 			hasRegister: false,
 			hasAudited: false,
 			activityUsers: [
-				{
-					name: 'test'
-				}
+
 			]
 		};
 	}
@@ -123,7 +123,8 @@ class Detail extends Component {
 							<span>{this.state.activity.activityName}</span>
 						</div>
 						<div className={styles.title1}>
-							<span>活动时间：</span><span>{this.state.activity.activityStartTime}</span>
+							<span>活动时间：</span><span>{moment(this.state.activity.activityStartTime).format(
+								"YYYY年MM月DD日 HH:mm:ss")}</span>
 						</div>
 						<div className={styles.title1}>
 							<span>活动地点：</span><span>{this.state.activity.place}</span>
@@ -133,6 +134,9 @@ class Detail extends Component {
 						</div>
 						<div className={styles.title1}>
 							<span>拼课人数：</span><span>{this.state.activity.volume}</span>
+						</div>
+						<div className={styles.title1}>
+							<span>已拼课人数：</span><span>{this.state.activity.participation}</span>
 						</div>
 						<div className={styles.title1}>
 							<span>发布者：</span><span>{this.state.activity.userId}</span>
@@ -156,20 +160,28 @@ class Detail extends Component {
 									)
 								})
 							}
+							{
+								this.state.activityUsers.length === 0 && (
+									<span>暂无</span>
+								)
+							}
 						</div>
 					</div>
 
 					<div className={styles.buttonLine}>
 						{
-							this.state.hasRegister ? (
-								<div className={styles.redButton} onClick={() => this._register()}>
-									<span>取消拼课</span>
-								</div>
-							) : (
-								<div className={styles.button} onClick={() => this._register()}>
-									<span>马上拼课</span>
-								</div>
+							this.state.hasAudited && (
+								this.state.hasRegister ? (
+									<div className={styles.redButton} onClick={() => this._register()}>
+										<span>取消拼课</span>
+									</div>
+								) : (
+									<div className={styles.button} onClick={() => this._register()}>
+										<span>马上拼课</span>
+									</div>
+								)
 							)
+
 						}
 
 						{
@@ -177,11 +189,11 @@ class Detail extends Component {
 
 								!this.state.hasAudited ? (
 									<div className={styles.redButton} onClick={() => this._audit()}>
-										<span>待审核</span>
+										<span>通过</span>
 									</div>
 								) : (
 									<div className={styles.button} onClick={() => this._audit()}>
-										<span>审核通过</span>
+										<span>下架</span>
 									</div>
 								)
 

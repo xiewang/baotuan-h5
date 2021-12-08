@@ -25,6 +25,7 @@
    justify-content: space-between;
    align-items: flex-start ;
    width: 60%;
+   text-align: left;
 }
 .contentLine {
    display: flex;
@@ -35,6 +36,7 @@
 }
 .buttonLine {
    justify-content: flex-end;
+   margin-top: 10px;
 }
 .button {
    background-color:#299903;
