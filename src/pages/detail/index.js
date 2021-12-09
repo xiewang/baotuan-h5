@@ -52,12 +52,18 @@ class Detail extends Component {
 						icon: 'success',
 						content: '拼课成功',
 					});
+					this.state.activity.participation++;
 				} else {
 					Toast.show({
 						icon: 'success',
 						content: '取消拼课成功',
 					});
+					this.state.activity.participation--;
 				}
+				this._getRegisterUsers();
+				this.setState({
+					activity: this.state.activity
+				})
 			} else {
 				if (this.state.hasRegister) {
 					Toast.show({
