@@ -98,7 +98,7 @@ class Detail extends Component {
 				if (!this.state.hasAudited) {
 					Toast.show({
 						icon: 'success',
-						content: '审核驳回',
+						content: '审核驳回，已下架',
 					});
 				} else {
 					Toast.show({
@@ -110,7 +110,7 @@ class Detail extends Component {
 				if (!this.state.hasAudited) {
 					Toast.show({
 						icon: 'success',
-						content: '审核驳回',
+						content: '审核驳回，已下架',
 					});
 				} else {
 					Toast.show({

@@ -66,7 +66,7 @@ service.interceptors.response.use(
         if ((error && error.response && error.response.status === 500)
             && getToken()
             && error.response.data.path !== '/user/logout') {
-
+            window.location.href = '/500';
         }
         Toast.show({
             icon: 'fail',

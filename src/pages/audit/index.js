@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import styles from './styles.module.css';
 import cns from 'classnames';
 import request from '../../utils/request';
-import { List, PullToRefresh, InfiniteScroll } from 'antd-mobile';
+import { List, PullToRefresh, InfiniteScroll, Empty } from 'antd-mobile';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
 import Header from "../../components/header/back";
@@ -96,21 +96,28 @@ class Home extends Component {
     return (
       <div className={styles.container}>
         <Header title={this.state.title} {...this.props} />
-        <PullToRefresh
-          onRefresh={() => this._getList()}
-          renderText={status => {
-            return <div>{statusRecord[status]}</div>
-          }}
-        >
-          <List>
-            {
-              this.state.activities.map((item, index) => (
-                <List.Item key={index}>{row(item, index)}</List.Item>
-              ))
-            }
-          </List>
-          <InfiniteScroll threshold={window.screen.height - 45} loadMore={() => this._getList(this.state.currentPage + 1)} hasMore={this.state.hasMore} />
-        </PullToRefresh>
+        {
+          !this.state.isLoading && this.state.activities.length === 0 ? (
+            <Empty description='暂无数据' />
+          ) : (
+            <PullToRefresh
+              onRefresh={() => this._getList()}
+              renderText={status => {
+                return <div>{statusRecord[status]}</div>
+              }}
+            >
+              <List>
+                {
+                  this.state.activities.map((item, index) => (
+                    <List.Item key={index}>{row(item, index)}</List.Item>
+                  ))
+                }
+              </List>
+              <InfiniteScroll threshold={window.screen.height - 45} loadMore={() => this._getList(this.state.currentPage + 1)} hasMore={this.state.hasMore} />
+            </PullToRefresh>
+          )
+        }
+
       </div>
     );
   }

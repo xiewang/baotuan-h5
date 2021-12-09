@@ -34,12 +34,14 @@ html {
   border-radius: 4px;
   height: 40px;
   padding: 0 8px;
+  font-size: 14px;
 }
 .adm-text-area {
   border: 1px solid #eeeeee;
   border-radius: 4px;
   height: 80px;
   padding: 0 8px;
+  font-size: 14px;
 }
 .adm-grid {
   margin-bottom: 10px;

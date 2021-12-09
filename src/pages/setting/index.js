@@ -23,20 +23,24 @@ class My extends Component {
     logout();
   }
 
+  _updateMyPhone() {
+
+  }
+
   render() {
     return (
       <div className={styles.container}>
         <Header title="设置" {...this.props} />
         <div className={styles.content}>
-          <div className={styles.line} onClick={() => this._jumpToActivityListPage('myPush')}>
+          <div className={styles.line} >
             <span>姓名</span>
             <span>{this.props.session.userInfo.name}</span>
           </div>
-          <div className={styles.line} onClick={() => this._jumpToActivityListPage('myPush')}>
+          <div className={styles.line} >
             <span>性别</span>
             <span>{this.props.session.userInfo.sex == 0 ? '男' : '女'}</span>
           </div>
-          <div className={styles.line} onClick={() => this._jumpToActivityListPage('myPush')}>
+          <div className={styles.line} onClick={() => this._updateMyPhone()}>
             <span>手机号</span>
             <span>{this.props.session.userInfo.phone}</span>
           </div>

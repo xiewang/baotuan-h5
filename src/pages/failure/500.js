@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { ConfigProvider, ErrorBlock } from 'antd-mobile'
 
 class NoMatch extends Component {
     constructor(props) {
@@ -12,7 +13,9 @@ class NoMatch extends Component {
 
     render() {
         return (
-            <div>发生未知错误</div>
+            <ConfigProvider>
+                <ErrorBlock />
+            </ConfigProvider>
         );
     }
 }

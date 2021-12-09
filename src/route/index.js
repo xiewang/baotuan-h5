@@ -12,6 +12,7 @@ import Detail from '../pages/detail';
 import Audit from '../pages/audit';
 import Setting from '../pages/setting';
 import NoMatch from '../pages/failure/404';
+import Error from '../pages/failure/500';
 import AuthorizedRoute from './AuthorizedRoute';
 import { TransitionGroup, CSSTransition } from 'react-transition-group';
 import { weChatSDKInit } from '../utils/common';
@@ -28,7 +29,7 @@ class XXTRouter extends Component {
         weChatSDKInit();
     }
 
-    _renderEntryChildren(props) {
+    _renderEntryChildren(props, Component) {
         const { match } = props;
         if (match) {
             this.state.entryClass = 'home-base home-show';
@@ -40,7 +41,7 @@ class XXTRouter extends Component {
         }
         return (
             <div className={this.state.entryClass}>
-                <Entry {...this.props} />
+                <Component {...this.props} />
             </div>
         )
     }
@@ -60,6 +61,7 @@ class XXTRouter extends Component {
                         <Route path="/login" exact component={Login} />
                         <AuthorizedRoute path="/audit" exact component={Audit} />
                         <AuthorizedRoute path="/setting" exact component={Setting} />
+                        <AuthorizedRoute path="/500" exact component={Error} />
                         <Route path="*">
                             <NoMatch />
                         </Route>
@@ -69,7 +71,7 @@ class XXTRouter extends Component {
         ));
         return (
             <Router>
-                <Route path="/" exact children={props => this._renderEntryChildren(props)} />
+                <Route path="/" exact children={props => this._renderEntryChildren(props, Entry)} />
                 <Routes />
             </Router>
         );

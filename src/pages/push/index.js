@@ -39,7 +39,8 @@ class Push extends Component {
       image: [],
       startDatePickerVisible: false,
       endDatePickerVisible: false,
-      maskVisible: false
+      maskVisible: false,
+      phone: ''
     };
   }
 
@@ -73,7 +74,8 @@ class Push extends Component {
       providerWechat: this.state.providerWechat,
       providerName: this.state.providerName,
       providerPhone: this.state.providerPhone,
-      image: this.state.image[0].file
+      image: this.state.image[0].file,
+      phone: this.state.phone
     };
     let formData = new FormData();
     for (let key in params) {
@@ -152,7 +154,8 @@ class Push extends Component {
           image: [],
           startDatePickerVisible: false,
           endDatePickerVisible: false,
-          maskVisible: false
+          maskVisible: false,
+          phone: ''
         });
       }
     });
@@ -185,6 +188,18 @@ class Push extends Component {
                   placeholder="请输入活动名称"
                   value={this.state.activityName}
                   onChange={val => this.setState({ activityName: val })}
+                />
+              </Grid.Item>
+            </Grid>
+            <Grid columns={7} gap={8}>
+              <Grid.Item span={2}>
+                <div className={styles.title}>手机号</div>
+              </Grid.Item>
+              <Grid.Item span={5}>
+                <Input
+                  placeholder="请输入您的手机号"
+                  value={this.state.phone}
+                  onChange={val => this.setState({ phone: val })}
                 />
               </Grid.Item>
             </Grid>
@@ -285,6 +300,7 @@ class Push extends Component {
                 <TextArea
                   title="请输入其他说明"
                   value={this.state.description}
+                  autoSize={{ minRows: 3, maxRows: 5 }}
                   onChange={val => this.setState({ description: val })}
                   // labelNumber={5}
                   rows={3}

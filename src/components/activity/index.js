@@ -34,7 +34,7 @@ class Header extends Component {
           <div className={styles.contentRight}>
             <div className={styles.description}>{rowData.description}</div>
             <div className={styles.time}>{moment(rowData.activityStartTime).format(
-              "YYYY年MM月DD日 HH:mm:ss")}</div>
+              "YYYY/MM/DD")}</div>
             <div className={styles.price}>
               <span>价格：{rowData.price}元</span>
               <span>抱团：{rowData.participation}/{rowData.volume}</span>
