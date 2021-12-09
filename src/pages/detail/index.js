@@ -6,7 +6,8 @@ import Header from "../../components/header/back";
 import { withRouter } from "react-router";
 import { connect } from "react-redux";
 import {
-	Toast
+	Toast,
+	Button
 } from 'antd-mobile';
 import moment from "moment";
 
@@ -17,9 +18,9 @@ class Detail extends Component {
 			activity: {},
 			hasRegister: false,
 			hasAudited: false,
-			activityUsers: [
-
-			]
+			auditing: false,
+			registering: false,
+			activityUsers: []
 		};
 	}
 
@@ -34,6 +35,9 @@ class Detail extends Component {
 	}
 
 	_register() {
+		this.setState({
+			registering: true
+		});
 		request({
 			method: 'post',
 			url: '/activity/register?activityId=' + this.state.activity.activityId,
@@ -67,10 +71,16 @@ class Detail extends Component {
 					});
 				}
 			}
+			this.setState({
+				registering: false
+			});
 		});
 	}
 
 	_audit() {
+		this.setState({
+			auditing: true
+		});
 		request({
 			method: 'post',
 			url: '/activity/audit?activityId=' + this.state.activity.activityId,
@@ -103,6 +113,9 @@ class Detail extends Component {
 					});
 				}
 			}
+			this.setState({
+				auditing: false
+			});
 		});
 	}
 
@@ -196,13 +209,13 @@ class Detail extends Component {
 						{
 							this.state.hasAudited && (
 								this.state.hasRegister ? (
-									<div className={styles.redButton} onClick={() => this._register()}>
+									<Button color='danger' style={{ marginRight: '10px' }} disabled={this.state.registering} onClick={() => this._register()}>
 										<span>取消拼课</span>
-									</div>
+									</Button>
 								) : (
-									<div className={styles.button} onClick={() => this._register()}>
+									<Button color='success' style={{ marginRight: '10px' }} disabled={this.state.registering} onClick={() => this._register()}>
 										<span>马上拼课</span>
-									</div>
+									</Button>
 								)
 							)
 
@@ -212,13 +225,13 @@ class Detail extends Component {
 							this.props.session.userInfo.role === "0" && (
 
 								!this.state.hasAudited ? (
-									<div className={styles.redButton} onClick={() => this._audit()}>
+									<Button color='success' disabled={this.state.auditing} onClick={() => this._audit()}>
 										<span>通过</span>
-									</div>
+									</Button>
 								) : (
-									<div className={styles.button} onClick={() => this._audit()}>
+									<Button color='danger' disabled={this.state.auditing} onClick={() => this._audit()}>
 										<span>下架</span>
-									</div>
+									</Button>
 								)
 
 							)
