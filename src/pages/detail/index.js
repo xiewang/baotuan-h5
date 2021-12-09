@@ -10,6 +10,7 @@ import {
 	Button
 } from 'antd-mobile';
 import moment from "moment";
+import { getToken } from "../../utils/auth";
 
 class Detail extends Component {
 	constructor(props) {
@@ -128,6 +129,7 @@ class Detail extends Component {
 
 
 	_getRegisterStatus() {
+		if (!getToken()) return;
 		request({
 			method: 'post',
 			url: '/activity/registerStatus?activityId=' + this.state.activity.activityId,

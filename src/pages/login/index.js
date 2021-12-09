@@ -51,12 +51,8 @@ class Login extends Component {
             });
             return code;
         } else {
-            this.setState({
-                isWechatLogin: false
-            });
             return null;
         }
-        return null;
     }
 
     _weCahtLogin(code) {
@@ -136,7 +132,7 @@ class Login extends Component {
                                 onChange={val => this.setState({ password: val })}
                             >密码</Input>
                             <div className={styles.button}>
-                                <Button onClick={() => this._login()} type="primary">登录</Button>
+                                <Button onClick={() => this._login()} block color='primary' size='large'>登录</Button>
                             </div>
                         </div>
                     )
