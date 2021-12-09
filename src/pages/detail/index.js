@@ -44,15 +44,27 @@ class Detail extends Component {
 					hasRegister: !this.state.hasRegister
 				});
 				if (this.state.hasRegister) {
-					Toast.info('拼课成功');
+					Toast.show({
+						icon: 'success',
+						content: '拼课成功',
+					});
 				} else {
-					Toast.info('取消拼课成功');
+					Toast.show({
+						icon: 'success',
+						content: '取消拼课成功',
+					});
 				}
 			} else {
 				if (this.state.hasRegister) {
-					Toast.info('拼课失败');
+					Toast.show({
+						icon: 'fail',
+						content: '拼课失败',
+					});
 				} else {
-					Toast.info('取消拼课失败');
+					Toast.show({
+						icon: 'fail',
+						content: '取消拼课失败',
+					});
 				}
 			}
 		});
@@ -68,15 +80,27 @@ class Detail extends Component {
 					hasAudited: !this.state.hasAudited
 				});
 				if (!this.state.hasAudited) {
-					Toast.info('审核驳回');
+					Toast.show({
+						icon: 'success',
+						content: '审核驳回',
+					});
 				} else {
-					Toast.info('通过审核，已上架');
+					Toast.show({
+						icon: 'success',
+						content: '通过审核，已上架',
+					});
 				}
 			} else {
 				if (!this.state.hasAudited) {
-					Toast.info('审核驳回');
+					Toast.show({
+						icon: 'success',
+						content: '审核驳回',
+					});
 				} else {
-					Toast.info('通过审核，已上架');
+					Toast.show({
+						icon: 'success',
+						content: '通过审核，已上架',
+					});
 				}
 			}
 		});

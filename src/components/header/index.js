@@ -2,7 +2,7 @@ import React, { Component, } from 'react';
 
 import styles from './styles.module.css';
 import cns from 'classnames';
-import { NavBar, Icon } from 'antd-mobile';
+import { NavBar } from 'antd-mobile-v2';
 import logo from '../../assets/logo.png';
 import { SetOutline } from 'antd-mobile-icons'
 

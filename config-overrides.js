@@ -14,16 +14,16 @@ const fileLoaderMatcher = function (rule) {
 
 module.exports = override(
   fixBabelImports("import", {
-      libraryName: "antd-mobile", libraryDirectory: "es", style: 'css' 
+    libraryName: "antd-mobile-v2", libraryDirectory: "es", style: 'css'
   }),
   addWebpackModuleRule({
-      test: /\.svg$/,
-      include: [path.resolve('src/assets/svg')],
-      use: [
-          {
-              loader: 'svg-sprite-loader',
-              options: { symbolId: "icon-[name]" }
-          }]
+    test: /\.svg$/,
+    include: [path.resolve('src/assets/svg')],
+    use: [
+      {
+        loader: 'svg-sprite-loader',
+        options: { symbolId: "icon-[name]" }
+      }]
   })
 )
 // module.exports =  override(config, env) {

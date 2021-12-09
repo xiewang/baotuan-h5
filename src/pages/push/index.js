@@ -2,16 +2,21 @@ import React, { Component } from 'react';
 import styles from './styles.module.css';
 import cns from 'classnames';
 import request from '../../utils/request';
+import Block from '../../components/block';
 import {
-  InputItem,
+  Input,
   List,
   Button,
-  ImagePicker,
-  Flex,
+  ImageUploader,
   Toast,
+  TextArea,
+  Grid,
   DatePicker,
-  TextareaItem
+  Mask
 } from 'antd-mobile';
+import { ImagePicker } from 'antd-mobile-v2';
+import moment from "moment";
+import { UploadOutline } from 'antd-mobile-icons';
 
 class Push extends Component {
   constructor(props) {
@@ -31,7 +36,10 @@ class Push extends Component {
       providerWechat: '',
       providerName: '',
       providerPhone: '',
-      image: []
+      image: [],
+      startDatePickerVisible: false,
+      endDatePickerVisible: false,
+      maskVisible: false
     };
   }
 
@@ -74,25 +82,44 @@ class Push extends Component {
     }
 
     if (!this.state.activityName) {
-      Toast('请输入活动名');
+      Toast.show({
+        content: '请输入活动名',
+      });
       return;
     }
     if (!this.state.price) {
-      Toast('请输入价格');
+      Toast.show({
+        content: '请输入价格',
+      });
       return;
     }
     if (!this.state.activityEndTime) {
-      Toast('请输入活动结束时间');
+      Toast.show({
+        content: '请输入活动结束时间',
+      });
       return;
     }
     if (!this.state.activityStartTime) {
-      Toast('请输入活动开始时间');
+      Toast.show({
+        content: '请输入活动开始时间',
+      });
       return;
     }
     if (this.state.volume <= 0) {
-      Toast('活动参团人数不能少于0个');
+      Toast.show({
+        content: '活动参团人数不能少于0个',
+      });
       return;
     }
+
+    this.setState({
+      maskVisible: true
+    });
+    Toast.show({
+      content: '上传中',
+      icon: 'loading',
+      duration: 0
+    })
 
     request({
       method: 'post',
@@ -103,115 +130,232 @@ class Push extends Component {
       }
     }).then((res) => {
       if (res.data.state === 'SUCCESS') {
-        Toast.info('上传成功')
+        Toast.clear();
+        Toast.show({
+          icon: 'success',
+          content: '上传成功',
+        });
+        this.setState({
+          activityName: '',
+          location: '',
+          price: '',
+          createTime: '',
+          activityStartTime: '',
+          activityEndTime: '',
+          updateTime: '',
+          userId: '',
+          description: '',
+          volume: 10,
+          providerWechat: '',
+          providerName: '',
+          providerPhone: '',
+          image: [],
+          startDatePickerVisible: false,
+          endDatePickerVisible: false,
+          maskVisible: false
+        });
       }
     });
   }
 
   render() {
-
     return (
       <div className={styles.container}>
         <div className={styles.section}>
-          <List renderHeader={() => '活动信息'}>
-            <Flex align="center" justify="start">
-              <span className={styles.title}>活动图片</span>
-              <Flex.Item>
+          <Block title="活动信息">
+            <Grid columns={7} gap={8}>
+              <Grid.Item span={2}>
+                <div className={styles.title}>活动图片</div>
+              </Grid.Item>
+              <Grid.Item span={5}>
                 <ImagePicker
                   files={this.state.image}
                   onChange={this._setImage}
                   multiple={false}
                   selectable={this.state.image.length < 1}
                 />
-              </Flex.Item>
-            </Flex>
-            <InputItem
-              placeholder=""
-              value={this.state.activityName}
-              onChange={val => this.setState({ activityName: val })}
-            >活动名称</InputItem>
-            <InputItem
-              placeholder=""
-              value={this.state.location}
-              onChange={val => this.setState({ location: val })}
-            >地点</InputItem>
-            <InputItem
-              placeholder=""
-              value={this.state.price}
-              type="number"
-              onChange={val => this.setState({ price: val })}
-            >价格</InputItem>
-            <DatePicker
-              value={this.state.activityStartTime}
-              onChange={date => this.setState({ activityStartTime: date })}
-            >
-              <List.Item arrow="horizontal">开始时间</List.Item>
-            </DatePicker>
-            <DatePicker
-              value={this.state.activityEndTime}
-              onChange={date => this.setState({ activityEndTime: date })}
-            >
-              <List.Item arrow="horizontal">结束时间</List.Item>
-            </DatePicker>
+              </Grid.Item>
+            </Grid>
+            <Grid columns={7} gap={8}>
+              <Grid.Item span={2}>
+                <div className={styles.title}>活动名称</div>
+              </Grid.Item>
+              <Grid.Item span={5}>
+                <Input
+                  placeholder="请输入活动名称"
+                  value={this.state.activityName}
+                  onChange={val => this.setState({ activityName: val })}
+                />
+              </Grid.Item>
+            </Grid>
+            <Grid columns={7} gap={8}>
+              <Grid.Item span={2}>
+                <div className={styles.title}>地点</div>
+              </Grid.Item>
+              <Grid.Item span={5}>
+                <Input
+                  placeholder="请输入活动地点"
+                  value={this.state.location}
+                  onChange={val => this.setState({ location: val })}
+                />
+              </Grid.Item>
+            </Grid>
+            <Grid columns={7} gap={8}>
+              <Grid.Item span={2}>
+                <div className={styles.title}>价格</div>
+              </Grid.Item>
+              <Grid.Item span={5}>
+                <Input
+                  placeholder="请输入活动价格"
+                  value={this.state.price}
+                  type="number"
+                  onChange={val => this.setState({ price: val })}
+                />
+              </Grid.Item>
+            </Grid>
 
-            <InputItem
-              placeholder=""
-              value={this.state.volume}
-              type="number"
-              onChange={val => this.setState({ volume: val })}
-            >人数</InputItem>
-            <TextareaItem
-              title="其他说明"
-              autoHeight
-              value={this.state.description}
-              onChange={val => this.setState({ description: val })}
-              labelNumber={5}
-              rows={3}
-            />
-          </List>
+            <Grid columns={7} gap={8}>
+              <Grid.Item span={2}>
+                <div className={styles.title}>人数</div>
+              </Grid.Item>
+              <Grid.Item span={5}>
+                <Input
+                  placeholder="请输入活动人数"
+                  value={this.state.volume}
+                  type="number"
+                  onChange={val => this.setState({ volume: val })}
+                />
+              </Grid.Item>
+            </Grid>
+
+            <Grid columns={7} gap={8}>
+              <Grid.Item span={2}>
+                <div className={styles.title}>开始时间</div>
+              </Grid.Item>
+              <Grid.Item span={5}>
+                <Button
+                  onClick={() => {
+                    this.setState({ startDatePickerVisible: true })
+                  }}
+                > {this.state.activityStartTime ? moment(this.state.activityStartTime).format(
+                  "YYYY年MM月DD日HH时mm分") : '-年 - 月 - 日 - 时 - 分'} </Button>
+                <DatePicker
+                  visible={this.state.startDatePickerVisible}
+                  onClose={() => {
+                    this.setState({ startDatePickerVisible: false })
+                  }}
+                  precision='minute'
+                  onConfirm={date => {
+                    this.setState({ activityStartTime: date })
+                  }}
+                />
+              </Grid.Item>
+            </Grid>
+            <Grid columns={7} gap={8}>
+              <Grid.Item span={2}>
+                <div className={styles.title}>结束时间</div>
+              </Grid.Item>
+              <Grid.Item span={5}>
+                <Button
+                  onClick={() => {
+                    this.setState({ endDatePickerVisible: true })
+                  }}
+                > {this.state.activityEndTime ? moment(this.state.activityEndTime).format(
+                  "YYYY年MM月DD日HH时mm分") : '-年 - 月 - 日 - 时 - 分'} </Button>
+                <DatePicker
+                  visible={this.state.endDatePickerVisible}
+                  onClose={() => {
+                    this.setState({ endDatePickerVisible: false })
+                  }}
+                  precision='minute'
+                  onConfirm={date => {
+                    this.setState({ activityEndTime: date })
+                  }}
+                />
+              </Grid.Item>
+            </Grid>
+
+            <Grid columns={7} gap={8}>
+              <Grid.Item span={2}>
+                <div className={styles.title}>其他说明</div>
+              </Grid.Item>
+              <Grid.Item span={5}>
+                <TextArea
+                  title="请输入其他说明"
+                  value={this.state.description}
+                  onChange={val => this.setState({ description: val })}
+                  // labelNumber={5}
+                  rows={3}
+                />
+              </Grid.Item>
+            </Grid>
+
+          </Block>
         </div>
         {/* <div className={styles.section}>
             <List renderHeader={() => '发起人信息'}>
-              <InputItem
+              <Input
                 placeholder=""
                 value={this.state.userId}
                 onChange={val=>this.setState({providerName: val})}
-              >用户名</InputItem>
-              <InputItem
+              >用户名</Input>
+              <Input
                 placeholder=""
                 value={this.state.place}
                 onChange={val=>this.setState({place: val})}
-              >身份</InputItem>
-              <InputItem
+              >身份</Input>
+              <Input
                 placeholder=""
                 value={this.state.providerWechat}
                 onChange={val=>this.setState({providerWechat: val})}
-              >微信名</InputItem>
+              >微信名</Input>
             </List>
           </div> */}
         <div className={styles.section}>
-          <List renderHeader={() => '课程提供方信息'}>
-            <InputItem
-              placeholder="来抱团呀用户名"
-              value={this.state.providerName}
-              onChange={val => this.setState({ providerName: val })}
-            >用户名</InputItem>
-            <InputItem
-              placeholder=""
-              value={this.state.providerWechat}
-              onChange={val => this.setState({ providerWechat: val })}
-            >微信名</InputItem>
-            <InputItem
-              placeholder=""
-              value={this.state.providerPhone}
-              onChange={val => this.setState({ providerPhone: val })}
-            >手机号</InputItem>
-          </List>
+          <Block title="课程提供方信息">
+            <Grid columns={7} gap={8}>
+              <Grid.Item span={2}>
+                <div className={styles.title}>用户名</div>
+              </Grid.Item>
+              <Grid.Item span={5}>
+                <Input
+                  placeholder="请输入来抱团呀用户名"
+                  value={this.state.providerName}
+                  onChange={val => this.setState({ providerName: val })}
+                />
+              </Grid.Item>
+            </Grid>
+            <Grid columns={7} gap={8}>
+              <Grid.Item span={2}>
+                <div className={styles.title}>微信名</div>
+              </Grid.Item>
+              <Grid.Item span={5}>
+                <Input
+                  placeholder="请输入微信名"
+                  value={this.state.providerWechat}
+                  onChange={val => this.setState({ providerWechat: val })}
+                />
+              </Grid.Item>
+            </Grid>
+            <Grid columns={7} gap={8}>
+              <Grid.Item span={2}>
+                <div className={styles.title}>手机号</div>
+              </Grid.Item>
+              <Grid.Item span={5}>
+                <Input
+                  placeholder="请输入手机号"
+                  value={this.state.providerPhone}
+                  onChange={val => this.setState({ providerPhone: val })}
+                />
+              </Grid.Item>
+            </Grid>
+
+          </Block>
         </div>
         <div className={styles.button}>
-          <Button onClick={() => this._submit()} type="primary">提交</Button>
+          <Button onClick={() => this._submit()} block color='primary' size='large'>提交</Button>
         </div>
-
+        <Mask visible={this.state.maskVisible} color='white' />
       </div>
     );
   }

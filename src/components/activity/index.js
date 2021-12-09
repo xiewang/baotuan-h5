@@ -27,7 +27,7 @@ class Header extends Component {
       rowData.picLink = missingImg
     }
     return (
-      <div key={rowID} >
+      <div key={rowID} className={styles.container}>
         <div className={styles.title}>{rowData.activityName}</div>
         <div className={styles.content}>
           <img className={styles.img} src={rowData.picLink} alt="" />

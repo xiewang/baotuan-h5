@@ -4,9 +4,10 @@ import cns from 'classnames';
 import request from '../../utils/request';
 import defaultPortrait from '../../assets/user.png';
 import {
-  Icon,
   Toast
 } from 'antd-mobile';
+import { RightOutline } from 'antd-mobile-icons'
+
 import { withRouter } from 'react-router';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
@@ -59,17 +60,17 @@ class My extends Component {
         <div className={styles.content}>
           <div className={styles.line} onClick={() => this._jumpToActivityListPage('myPush')}>
             <span>我发布的课程</span>
-            <Icon type="right" size={'md'} />
+            <RightOutline />
           </div>
           <div className={styles.line} onClick={() => this._jumpToActivityListPage('myRegister')}>
             <span>我参与的课程</span>
-            <Icon type="right" size={'md'} />
+            <RightOutline />
           </div>
           {
             this.state.my.role === "0" && (
               <div className={styles.line} onClick={() => this._jumpToActivityListPage('audit')}>
                 <span>需审核的课程</span>
-                <Icon type="right" size={'md'} />
+                <RightOutline />
               </div>
             )
           }

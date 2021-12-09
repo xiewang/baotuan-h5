@@ -2,36 +2,39 @@ import React, { Component } from 'react';
 
 import styles from './styles.module.css';
 import cns from 'classnames';
-import { NavBar, Icon } from 'antd-mobile';
+import { NavBar } from 'antd-mobile';
+import { LeftOutline } from 'antd-mobile-icons'
 
 class Header extends Component {
-    constructor(props) {
-        super(props);
-       
-    }
+  constructor(props) {
+    super(props);
 
-    componentDidMount() {
+  }
 
-    }
+  componentDidMount() {
 
-    _leftClick() {
-      if (this.props.onLeftClick) {
-        this.props.onLeftClick();
-        return;
-      }
-      this.props.history.goBack();
+  }
+
+  _leftClick() {
+    if (this.props.onLeftClick) {
+      this.props.onLeftClick();
+      return;
     }
-    
-    render() {
-       
-        return (
-            <NavBar
-            mode="light"
-            icon={<Icon type="left" />}
-            onLeftClick={() => this._leftClick() }
-          >{this.props.title ||''}</NavBar>
-        )
-    }
+    this.props.history.goBack();
+  }
+
+  render() {
+
+    return (
+      <NavBar
+        style={{ backgroundColor: '#fff' }}
+        mode="light"
+        back="返回"
+        backArrow={<LeftOutline />}
+        onBack={() => this._leftClick()}
+      >{this.props.title || ''}</NavBar>
+    )
+  }
 }
 
 

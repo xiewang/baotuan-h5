@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import styles from './styles.module.css';
 import cns from 'classnames';
 import request from '../../utils/request';
-import { ListView } from 'antd-mobile';
+import { List, PullToRefresh, InfiniteScroll } from 'antd-mobile';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
 import Header from "../../components/header/back";
@@ -11,14 +11,13 @@ import Activity from '../../components/activity';
 class Home extends Component {
   constructor(props) {
     super(props);
-    const activities = new ListView.DataSource({
-      rowHasChanged: (row1, row2) => row1 !== row2,
-    });
     this.state = {
-      activities: activities,
+      activities: [],
       isLoading: true,
       type: 'myPush',
-      title: '我发布的课程'
+      title: '我发布的课程',
+      hasMore: true,
+      currentPage: 0
     };
   }
 
@@ -45,7 +44,9 @@ class Home extends Component {
     return true;
   }
 
-  _getList() {
+  _getList(page) {
+    page = page || 0;
+    const pageSize = 10;
     let url = '/activity/getAll';
     if (this.state.type === 'myPush') {
       url = '/activity/getMyAll';
@@ -56,61 +57,57 @@ class Home extends Component {
     if (this.state.type === 'audit') {
       url = '/activity/getAllAudit';
     }
-    request({
-      url: url,
+    return request({
+      url: url + '?size=' + pageSize + '&page=' + page,
       method: 'get'
     }).then((res) => {
       if (res.data.state === 'SUCCESS') {
+        let hasMore = true;
+        if (res.data.data.content.length < pageSize) {
+          hasMore = false;
+        }
+        if (page === 0) {
+          this.state.activities = [];
+        }
         this.setState({
-          activities: this.state.activities.cloneWithRows(res.data.data.content),
-          isLoading: false
+          activities: this.state.activities.concat(res.data.data.content),
+          isLoading: false,
+          hasMore: hasMore,
+          currentPage: page
         });
       }
     });
   }
 
-  _onEndReached() {
-
-  }
-
-  _footer() {
-    return (
-      <div style={{ padding: 30, textAlign: 'center' }}>
-        {this.state.isLoading ? '加载中' : '到底了'}
-      </div>
-    );
-  }
-
   render() {
-    const separator = (sectionID, rowID) => (
-      <div
-        key={`${sectionID}-${rowID}`}
-        style={{
-          backgroundColor: '#F5F5F5',
-          height: 8,
-        }}
-      />
-    );
-    const row = (rowData, sectionID, rowID) => {
+    const statusRecord = {
+      pulling: '用力拉...',
+      canRelease: '松开吧...',
+      refreshing: '玩命加载中...',
+      complete: '加载完毕...',
+    };
+
+    const row = (rowData, rowID) => {
       return (<Activity rowData={rowData} rowID={rowID} {...this.props} />)
     };
     return (
       <div className={styles.container}>
         <Header title={this.state.title} {...this.props} />
-        <ListView
-          ref={el => this.lv = el}
-          initialListSize={15}
-          pageSize={15}
-          dataSource={this.state.activities}
-          renderFooter={() => this._footer()}
-          renderRow={row}
-          renderSeparator={separator}
-          className="am-list"
-          useBodyScroll
-          scrollRenderAheadDistance={500}
-          onEndReached={this._onEndReached.bind(this)}
-          onEndReachedThreshold={10}
-        />
+        <PullToRefresh
+          onRefresh={() => this._getList()}
+          renderText={status => {
+            return <div>{statusRecord[status]}</div>
+          }}
+        >
+          <List>
+            {
+              this.state.activities.map((item, index) => (
+                <List.Item key={index}>{row(item, index)}</List.Item>
+              ))
+            }
+          </List>
+          <InfiniteScroll threshold={window.screen.height - 45} loadMore={() => this._getList(this.state.currentPage + 1)} hasMore={this.state.hasMore} />
+        </PullToRefresh>
       </div>
     );
   }

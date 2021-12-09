@@ -4,11 +4,12 @@ import { bindActionCreators } from 'redux';
 import { update } from '../../actions/session';
 import styles from './styles.module.css';
 import {
-    Icon,
-    InputItem,
+    Input,
     Button,
     Toast
 } from 'antd-mobile';
+import { CloseOutline } from 'antd-mobile-icons'
+
 import cns from 'classnames';
 import request from '../../utils/request';
 import { setToken } from '../../utils/auth';
@@ -65,12 +66,18 @@ class Login extends Component {
         }).then((res) => {
             if (res.data.state === 'SUCCESS' && res.data.token) {
                 setToken(res.data.token);
-                Toast.info('登录成功');
+                Toast.show({
+                    icon: 'success',
+                    content: '登录成功',
+                });
                 setTimeout(() => {
                     window.location.href = '/';
                 }, 1200);
             } else {
-                Toast.info('登录失败');
+                Toast.show({
+                    icon: 'fail',
+                    content: '登录失败',
+                });
                 this.setState({
                     isWechatLogin: false
                 });
@@ -88,10 +95,16 @@ class Login extends Component {
         }).then((res) => {
             if (res.data.state === 'SUCCESS' && res.data.token) {
                 setToken(res.data.token);
-                Toast.info('登录成功');
+                Toast.show({
+                    icon: 'success',
+                    content: '登录成功',
+                });
                 this._back();
             } else {
-                Toast.info('登录失败');
+                Toast.show({
+                    icon: 'fail',
+                    content: '登录失败',
+                });
             }
         });
     }
@@ -101,7 +114,7 @@ class Login extends Component {
             <div className={styles.container}>
 
                 <div className={styles.close} onClick={() => this._back()}>
-                    <Icon type="cross" size={'lg'} />
+                    <CloseOutline color='var(--adm-color-primary)' fontSize={20} />
                 </div>
                 {this.state.code}
                 {
@@ -109,19 +122,19 @@ class Login extends Component {
                         <div><span>微信登录中...</span></div>
                     ) : (
                         <div className={styles.form}>
-                            <InputItem
+                            <Input
                                 className={styles.formInput}
                                 placeholder="手机号"
                                 value={this.state.phone}
                                 onChange={val => this.setState({ phone: val })}
-                            >手机号</InputItem>
-                            <InputItem
+                            >手机号</Input>
+                            <Input
                                 className={styles.formInput}
                                 placeholder="密码"
                                 type="password"
                                 value={this.state.password}
                                 onChange={val => this.setState({ password: val })}
-                            >密码</InputItem>
+                            >密码</Input>
                             <div className={styles.button}>
                                 <Button onClick={() => this._login()} type="primary">登录</Button>
                             </div>

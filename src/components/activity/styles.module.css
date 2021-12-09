@@ -11,12 +11,14 @@
  }
  .img {
     /* height: 64px; */
+    margin-bottom: 30px;
     margin-right: 15px;
     width: 30%;
  }
  .content {
     display: flex;
     padding: 15px 15px;
+    font-size: 14px;
  }
  .contentRight {
     display: flex;
@@ -53,3 +55,7 @@
      align-items: center;
      width: 100%;
  }
+
+.container {
+   background-color: #fff;
+}

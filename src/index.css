@@ -10,6 +10,40 @@ html, body, ul, li, ol, dl, dd, dt, p, h1, h2, h3, h4, h5, h6, form, fieldset, l
   margin: 0;
   padding: 0;
 }
+html {
+  touch-action: manipulation;
+}
 .am-tab-bar-bar .am-tab-bar-tab-title {
   font-size: 12px;
+}
+.adm-list-item-content{
+  padding: 0;
+}
+.adm-list-item {
+  padding-left: 0;
+  margin-bottom: 8px;
+}
+.adm-list-default {
+  background: #fff0;
+}
+.am-navbar-light {
+  border-bottom: 1px solid #9999993b;
+}
+.adm-input {
+  border: 1px solid #eeeeee;
+  border-radius: 4px;
+  height: 40px;
+  padding: 0 8px;
+}
+.adm-text-area {
+  border: 1px solid #eeeeee;
+  border-radius: 4px;
+  height: 80px;
+  padding: 0 8px;
+}
+.adm-grid {
+  margin-bottom: 10px;
+}
+.adm-grid-item {
+  text-align: left;
 }

@@ -45,7 +45,10 @@ service.interceptors.response.use(
 
         }
         if (state !== 'SUCCESS') {
-            Toast.fail(responseData.resultErrorMessage || '请求失败');
+            Toast.show({
+                icon: 'fail',
+                content: responseData.resultErrorMessage || '请求失败',
+            });
             return Promise.reject(responseData || 'Error');
         } else {
             return response;
@@ -65,8 +68,10 @@ service.interceptors.response.use(
             && error.response.data.path !== '/user/logout') {
 
         }
-        console.log(error);
-        Toast.fail(error.message || '请求失败')
+        Toast.show({
+            icon: 'fail',
+            content: error.message || '请求失败',
+        });
         return Promise.reject(error);
     }
 )
