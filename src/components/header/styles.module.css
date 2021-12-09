@@ -2,3 +2,10 @@
     width: 30px;
     height: 30px;
 }
+.nav {
+    background-color: #fff;
+    position: fixed;
+    width: 100%;
+    left: 0;
+    top: 0 !important;
+}

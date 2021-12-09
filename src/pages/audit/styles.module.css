@@ -16,8 +16,7 @@
    width: 30%;
 }
 .content {
-   display: flex;
-   padding: 15px 0px;
+   padding-top: 45px;
 }
 .contentRight {
    display: flex;

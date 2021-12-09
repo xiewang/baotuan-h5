@@ -26,13 +26,14 @@ class Header extends Component {
   render() {
 
     return (
-      <NavBar
-        style={{ backgroundColor: '#fff' }}
-        mode="light"
-        back="返回"
-        backArrow={<LeftOutline />}
-        onBack={() => this._leftClick()}
-      >{this.props.title || ''}</NavBar>
+      <div className={styles.nav}>
+        <NavBar
+          mode="light"
+          back="返回"
+          backArrow={<LeftOutline />}
+          onBack={() => this._leftClick()}
+        >{this.props.title || ''}</NavBar>
+      </div>
     )
   }
 }

@@ -13,8 +13,9 @@
 }
 .content{
    border-top: 1px solid rgb(211, 211, 211);
-   margin-top: 12px;
    font-size: 13px;
+   padding-top: 58px;
+   overflow: hidden;
 }
 .line {
    background-color: #fff;
@@ -34,7 +35,7 @@
    color: #fff;
    font-size: 16px;
    text-align: center;
-   position: absolute;
+   position: fixed;
    bottom: 0;
    left: 0;
 }
