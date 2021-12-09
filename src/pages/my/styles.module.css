@@ -30,7 +30,7 @@
 .content{
    border-top: 1px solid rgb(211, 211, 211);
    margin-top: 12px;
-   font-size: 13px;
+   font-size: 14px;
 }
 .line {
    background-color: #fff;
@@ -41,4 +41,20 @@
    align-items: center;
    padding: 0 12px;
    border-bottom: 1px solid rgb(211, 211, 211);
+}
+.num {
+  
+   display: flex;
+   flex-direction: row;
+   align-items: center;
+   justify-content: center;
+}
+.num span {
+   width: 20px;
+   height: 20px;
+   line-height: 20px;
+   border-radius: 15px;
+   background-color: rgb(255, 94, 94);
+   color: #fff;
+   font-size: 10px;
 }

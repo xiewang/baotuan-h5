@@ -234,6 +234,7 @@ class Push extends Component {
               </Grid.Item>
               <Grid.Item span={5}>
                 <Button
+                  style={{ width: '100%' }}
                   onClick={() => {
                     this.setState({ startDatePickerVisible: true })
                   }}
@@ -257,6 +258,7 @@ class Push extends Component {
               </Grid.Item>
               <Grid.Item span={5}>
                 <Button
+                  style={{ width: '100%' }}
                   onClick={() => {
                     this.setState({ endDatePickerVisible: true })
                   }}

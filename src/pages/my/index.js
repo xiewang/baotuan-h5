@@ -17,12 +17,16 @@ class My extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      my: {}
+      my: {},
+      publishNum: 0,
+      registerNum: 0,
+      auditNum: 0
     };
   }
 
   componentDidMount() {
     this._getMyInfo();
+    this._getSummaryNum();
   }
 
   _getMyInfo() {
@@ -43,6 +47,44 @@ class My extends Component {
     this.props.history.push('/audit', type);
   }
 
+  _getSummaryNum() {
+    let url = '/activity/getMyAll';
+    request({
+      url: url,
+      method: 'get'
+    }).then((res) => {
+      if (res.data.state === 'SUCCESS') {
+        this.setState({
+          publishNum: res.data.data.totalElements
+        });
+      }
+    });
+
+    url = '/activity/getMyAllRegister';
+    request({
+      url: url,
+      method: 'get'
+    }).then((res) => {
+      if (res.data.state === 'SUCCESS') {
+        this.setState({
+          registerNum: res.data.data.totalElements
+        });
+      }
+    });
+
+    url = '/activity/getAllAudit';
+    request({
+      url: url,
+      method: 'get'
+    }).then((res) => {
+      if (res.data.state === 'SUCCESS') {
+        this.setState({
+          auditNum: res.data.data.totalElements
+        });
+      }
+    });
+  }
+
   render() {
 
     return (
@@ -60,17 +102,21 @@ class My extends Component {
         <div className={styles.content}>
           <div className={styles.line} onClick={() => this._jumpToActivityListPage('myPush')}>
             <span>我发布的课程</span>
-            <RightOutline />
+            <div className={styles.num}><span>{this.state.publishNum}</span><RightOutline /></div>
+
           </div>
           <div className={styles.line} onClick={() => this._jumpToActivityListPage('myRegister')}>
             <span>我参与的课程</span>
-            <RightOutline />
+            <div className={styles.num}><span>{this.state.registerNum}</span><RightOutline /></div>
+
           </div>
           {
             this.state.my.role === "0" && (
               <div className={styles.line} onClick={() => this._jumpToActivityListPage('audit')}>
+
                 <span>需审核的课程</span>
-                <RightOutline />
+                <div className={styles.num}><span>{this.state.auditNum}</span><RightOutline /></div>
+
               </div>
             )
           }

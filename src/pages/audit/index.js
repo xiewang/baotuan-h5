@@ -57,6 +57,9 @@ class Home extends Component {
     if (this.state.type === 'audit') {
       url = '/activity/getAllAudit';
     }
+    if (!this.state.hasMore) {
+      return new Promise.resolve();
+    }
     return request({
       url: url + '?size=' + pageSize + '&page=' + page,
       method: 'get'
