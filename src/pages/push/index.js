@@ -114,6 +114,21 @@ class Push extends Component {
       return;
     }
 
+    if (!this.state.phone) {
+      Toast.show({
+        content: '请输入您的手机号',
+      });
+      return;
+    }
+
+    if (!(/^1[3|4|5|7|8]\d{9}$/.test(this.state.phone))) {
+      Toast.show({
+        content: '您的手机号有误',
+      });
+      return;
+    }
+
+
     this.setState({
       maskVisible: true
     });
@@ -156,6 +171,12 @@ class Push extends Component {
           endDatePickerVisible: false,
           maskVisible: false,
           phone: ''
+        });
+      }
+      if (res.data.state === 'FAILED' && res.data.data === 'the phone has been registered') {
+        Toast.show({
+          icon: 'fail',
+          content: '您的手机号也被注册，请换一个手机号',
         });
       }
     });
