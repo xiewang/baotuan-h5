@@ -5,7 +5,8 @@
     border-bottom: 1px solid rgb(246, 246, 246);
     justify-content: flex-start;
     display: flex;
-    background-image: linear-gradient(to right, #33a3f4 , #bee4ff);
+    /* background-image: linear-gradient(to right, #33a3f4 , #bee4ff); */
+    background-color: #10a716;
     color: #fff;
     padding: 0 15px;
  }
@@ -43,7 +44,8 @@
     margin-top: 10px;
  }
  .button {
-   background-image: linear-gradient(to right, #03eb35 , #168b01);
+   /* background-image: linear-gradient(to right, #03eb35 , #168b01); */
+   background-color: #c2d501;
    width: 80px;
     height: 28px;
     line-height: 28px;
