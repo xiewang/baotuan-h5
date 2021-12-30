@@ -15,7 +15,7 @@ class Home extends Component {
       activities: [],
       isLoading: true,
       type: 'myPush',
-      title: '我发布的课程',
+      title: '我发布的拼团',
       hasMore: true,
       currentPage: 0
     };
@@ -24,13 +24,13 @@ class Home extends Component {
   componentDidMount() {
     let title = '';
     if (this.props.location.state === 'myPush') {
-      title = '我发布的课程';
+      title = '我发布的拼团';
     }
     if (this.props.location.state === 'myRegister') {
-      title = '我参与的课程';
+      title = '我参与的拼团';
     }
     if (this.props.location.state === 'audit') {
-      title = '需审核的课程';
+      title = '需审核的拼团';
     }
     this.state.type = this.props.location.state;
     this.setState({

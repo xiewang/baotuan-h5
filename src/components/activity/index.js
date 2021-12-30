@@ -44,7 +44,7 @@ class Header extends Component {
                 {this.props.location.state && this.props.location.state === 'audit' ? (
                   <span>去审核</span>
                 ) : (
-                  <span>马上拼课</span>
+                  <span>马上团</span>
                 )}
               </div>
             </div>

@@ -51,13 +51,13 @@ class Detail extends Component {
 				if (this.state.hasRegister) {
 					Toast.show({
 						icon: 'success',
-						content: '拼课成功',
+						content: '拼团成功',
 					});
 					this.state.activity.participation++;
 				} else {
 					Toast.show({
 						icon: 'success',
-						content: '取消拼课成功',
+						content: '取消拼团成功',
 					});
 					this.state.activity.participation--;
 				}
@@ -69,12 +69,12 @@ class Detail extends Component {
 				if (this.state.hasRegister) {
 					Toast.show({
 						icon: 'fail',
-						content: '拼课失败',
+						content: '拼团失败',
 					});
 				} else {
 					Toast.show({
 						icon: 'fail',
-						content: '取消拼课失败',
+						content: '取消拼团失败',
 					});
 				}
 			}
@@ -178,24 +178,24 @@ class Detail extends Component {
 							<span>费用：</span><span>{this.state.activity.price}元/次</span>
 						</div>
 						<div className={styles.title1}>
-							<span>拼课人数：</span><span>{this.state.activity.volume}</span>
+							<span>拼团人数：</span><span>{this.state.activity.volume}</span>
 						</div>
 						<div className={styles.title1}>
-							<span>已拼课人数：</span><span>{this.state.activity.participation}</span>
+							<span>已拼团人数：</span><span>{this.state.activity.participation}</span>
 						</div>
 						<div className={styles.title1}>
 							<span>发布者：</span><span>{this.state.activity.userId}</span>
 						</div>
 						<div className={styles.title1}>
-							<span>课程提供方：</span><span>{this.state.activity.providerName}</span>
+							<span>拼团提供方：</span><span>{this.state.activity.providerName}</span>
 						</div>
 						<div className={styles.title1}>
-							<span>课程详情：</span><span>{this.state.activity.description}</span>
+							<span>拼团详情：</span><span>{this.state.activity.description}</span>
 						</div>
 					</div>
 					<div className={styles.detail}>
 						<div className={styles.title}>
-							<span>拼课人员</span>
+							<span>拼团人员</span>
 						</div>
 						<div className={styles.users}>
 							{
@@ -218,11 +218,11 @@ class Detail extends Component {
 							this.state.hasAudited && (
 								this.state.hasRegister ? (
 									<Button color='danger' style={{ marginRight: '10px' }} disabled={this.state.registering} onClick={() => this._register()}>
-										<span>取消拼课</span>
+										<span>取消团</span>
 									</Button>
 								) : (
 									<Button color='success' style={{ marginRight: '10px' }} disabled={this.state.registering} onClick={() => this._register()}>
-										<span>马上拼课</span>
+										<span>马上团</span>
 									</Button>
 								)
 							)

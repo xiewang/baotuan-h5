@@ -351,7 +351,7 @@ class Push extends Component {
             </List>
           </div> */}
         <div className={styles.section}>
-          <Block title="课程提供方信息">
+          <Block title="拼团提供方信息">
             <Grid columns={7} gap={8}>
               <Grid.Item span={2}>
                 <div className={styles.title}>用户名</div>

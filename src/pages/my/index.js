@@ -101,12 +101,12 @@ class My extends Component {
         </div>
         <div className={styles.content}>
           <div className={styles.line} onClick={() => this._jumpToActivityListPage('myPush')}>
-            <span>我发布的课程</span>
+            <span>我发布的拼团</span>
             <div className={styles.num}><span>{this.state.publishNum}</span><RightOutline /></div>
 
           </div>
           <div className={styles.line} onClick={() => this._jumpToActivityListPage('myRegister')}>
-            <span>我参与的课程</span>
+            <span>我参与的拼团</span>
             <div className={styles.num}><span>{this.state.registerNum}</span><RightOutline /></div>
 
           </div>
@@ -114,7 +114,7 @@ class My extends Component {
             this.state.my.role === "0" && (
               <div className={styles.line} onClick={() => this._jumpToActivityListPage('audit')}>
 
-                <span>需审核的课程</span>
+                <span>需审核的拼团</span>
                 <div className={styles.num}><span>{this.state.auditNum}</span><RightOutline /></div>
 
               </div>
