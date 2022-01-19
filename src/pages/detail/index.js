@@ -27,7 +27,8 @@ class Detail extends Component {
 			registering: false,
 			activityUsers: [],
 			phone: this.props.session.userInfo.phone,
-			DialogVisible: false
+			DialogVisible: false,
+			publisherName: ''
 		};
 	}
 
@@ -39,6 +40,7 @@ class Detail extends Component {
 		this.state.activity = this.props.location.state;
 		this._getRegisterStatus();
 		this._getRegisterUsers();
+		this._getPublisher(this.state.activity.userId);
 	}
 
 	_register() {
@@ -206,6 +208,19 @@ class Detail extends Component {
 		});
 	}
 
+	_getPublisher(userId) {
+		request({
+			method: 'get',
+			url: '/user/userInfo?userId=' + userId,
+		}).then((res) => {
+			if (res.data.state === 'SUCCESS' && res.data.data) {
+				this.setState({
+					publisherName: res.data.data.name
+				})
+			}
+		});
+	}
+
 	render() {
 		const that = this;
 		return (
@@ -236,7 +251,7 @@ class Detail extends Component {
 							<span>已拼团人数：</span><span>{this.state.activity.participation}</span>
 						</div>
 						<div className={styles.title1}>
-							<span>发布者：</span><span>{this.state.activity.userId}</span>
+							<span>发布者：</span><span>{this.state.publisherName}</span>
 						</div>
 						<div className={styles.title1}>
 							<span>拼团提供方：</span><span>{this.state.activity.providerName}</span>
