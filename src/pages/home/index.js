@@ -21,6 +21,9 @@ class Home extends Component {
 
   componentDidMount() {
     this._getList();
+    window.addEventListener("pushSuccess", e => {
+      this._getList();
+    });
   }
 
   shouldComponentUpdate(nextProps, nextState) {

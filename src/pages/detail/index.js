@@ -15,6 +15,7 @@ import moment from "moment";
 import { bindActionCreators } from 'redux';
 import { getToken } from "../../utils/auth";
 import { update } from '../../actions/session';
+import { emitEvent } from '../../utils/common';
 
 class Detail extends Component {
 	constructor(props) {
@@ -134,6 +135,8 @@ class Detail extends Component {
 			this.setState({
 				auditing: false
 			});
+			emitEvent("auditFinished", {});
+			emitEvent("pushSuccess", {});
 		});
 	}
 
