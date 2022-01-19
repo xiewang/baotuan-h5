@@ -176,7 +176,7 @@ class Push extends Component {
       if (res.data.state === 'FAILED' && res.data.data === 'the phone has been registered') {
         Toast.show({
           icon: 'fail',
-          content: '您的手机号也被注册，请换一个手机号',
+          content: '您的手机号已被注册，请换一个手机号',
         });
       }
     });

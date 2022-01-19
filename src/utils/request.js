@@ -47,9 +47,9 @@ service.interceptors.response.use(
         if (state !== 'SUCCESS') {
             Toast.show({
                 icon: 'fail',
-                content: responseData.resultErrorMessage || '请求失败',
+                content: responseData.resultErrorMessage || responseData.error.message || '请求失败',
             });
-            return Promise.reject(responseData || 'Error');
+            return Promise.resolve(response || 'Error');
         } else {
             return response;
         }

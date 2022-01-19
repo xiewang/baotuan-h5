@@ -7,10 +7,14 @@ import { withRouter } from "react-router";
 import { connect } from "react-redux";
 import {
 	Toast,
-	Button
+	Button,
+	Dialog,
+	Input
 } from 'antd-mobile';
 import moment from "moment";
+import { bindActionCreators } from 'redux';
 import { getToken } from "../../utils/auth";
+import { update } from '../../actions/session';
 
 class Detail extends Component {
 	constructor(props) {
@@ -21,7 +25,9 @@ class Detail extends Component {
 			hasAudited: false,
 			auditing: false,
 			registering: false,
-			activityUsers: []
+			activityUsers: [],
+			phone: this.props.session.userInfo.phone,
+			DialogVisible: false
 		};
 	}
 
@@ -36,6 +42,9 @@ class Detail extends Component {
 	}
 
 	_register() {
+		if (this.props.session.userInfo.phone == "") {
+			this._showPhoneEditShadow();
+		}
 		this.setState({
 			registering: true
 		});
@@ -155,7 +164,51 @@ class Detail extends Component {
 		});
 	}
 
+	_showPhoneEditShadow(value) {
+		const that = this;
+		this.setState({
+			DialogVisible: value || !this.state.DialogVisible
+		});
+	}
+
+	_updatePhone() {
+		if (!this.state.phone || !(/^1(3|4|5|7|8|9|6)\d{9}$/i.test(this.state.phone))) {
+			return Toast.show({
+				icon: 'fail',
+				content: '请填写正确的手机号码',
+			});
+		}
+		let formData = new FormData();
+		formData.append("phone", this.state.phone);
+		request({
+			method: 'post',
+			url: '/user/updateInfo',
+			data: formData,
+			headers: {
+				'Content-Type': 'multipart/form-data'
+			}
+		}).then((res) => {
+			if (res.data.state === 'SUCCESS') {
+				Toast.clear();
+				Toast.show({
+					icon: 'success',
+					content: '手机号设置成功',
+				});
+				this._showPhoneEditShadow(false);
+				this.props.session.userInfo.phone = this.state.phone;
+				this.props.update(this.props.session.userInfo); //更新store中user info
+			}
+			if (res.data.state === 'FAILED' && res.data.error.message === 'the phone has been registered') {
+				Toast.show({
+					icon: 'fail',
+					content: '您的手机号已被注册，请换一个手机号',
+				});
+			}
+		});
+	}
+
 	render() {
+		const that = this;
 		return (
 			<div className={styles.container}>
 				<Header title="活动详情" {...this.props} />
@@ -201,7 +254,7 @@ class Detail extends Component {
 							{
 								this.state.activityUsers.map(v => {
 									return (
-										<span>{v.name}</span>
+										<span key={v.name}>{v.name}</span>
 									)
 								})
 							}
@@ -249,6 +302,34 @@ class Detail extends Component {
 					</div>
 
 				</div>
+				<Dialog
+					visible={this.state.DialogVisible}
+					title="联系方式"
+					content={<Input placeholder='请输入手机号'
+						onChange={val => { that.setState({ phone: val }) }}
+						value={this.state.phone}
+						type="number"
+						clearable
+					/>}
+					closeOnAction={false}
+					closeOnMaskClick={true}
+					onClose={() => {
+						this._showPhoneEditShadow(false)
+					}}
+					actions={[[
+						{
+							key: 'confirm',
+							text: '取消',
+							onClick: () => this._showPhoneEditShadow(false)
+						},
+						{
+							key: 'confirm3',
+							text: '提交',
+							bold: true,
+							onClick: this._updatePhone.bind(this)
+						}
+					]]}
+				/>
 			</div>
 		);
 	}
@@ -260,4 +341,10 @@ function mapStateToProps(state) {
 		session,
 	};
 }
-export default connect(mapStateToProps)(withRouter(Detail));
+function mapDispatchToProps(dispatch, ownProps) {
+	return bindActionCreators({
+		update
+	}, dispatch);
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(Detail));
