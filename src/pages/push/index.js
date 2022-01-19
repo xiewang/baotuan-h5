@@ -14,9 +14,14 @@ import {
   DatePicker,
   Mask
 } from 'antd-mobile';
+import { emitEvent } from '../../utils/common';
 import { ImagePicker } from 'antd-mobile-v2';
 import moment from "moment";
 import { UploadOutline } from 'antd-mobile-icons';
+import { update } from '../../actions/session';
+import { withRouter } from 'react-router';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 
 class Push extends Component {
   constructor(props) {
@@ -74,7 +79,7 @@ class Push extends Component {
       providerWechat: this.state.providerWechat,
       providerName: this.state.providerName,
       providerPhone: this.state.providerPhone,
-      image: this.state.image[0].file,
+      image: this.state.image[0] && this.state.image[0].file,
       phone: this.state.phone
     };
     let formData = new FormData();
@@ -172,8 +177,9 @@ class Push extends Component {
           maskVisible: false,
           phone: ''
         });
+        emitEvent('pushSuccess', {});
       }
-      if (res.data.state === 'FAILED' && res.data.data === 'the phone has been registered') {
+      if (res.data.state === 'FAILED' && res.data.error.message === 'the phone has been registered') {
         Toast.show({
           icon: 'fail',
           content: '您的手机号已被注册，请换一个手机号',
@@ -400,5 +406,17 @@ class Push extends Component {
   }
 }
 
+function mapStateToProps(state) {
+  const { session } = state;
+  return {
+    session
+  };
+}
 
-export default Push;
+function mapDispatchToProps(dispatch, ownProps) {
+  return bindActionCreators({
+    update
+  }, dispatch);
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(Push));

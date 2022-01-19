@@ -42,7 +42,7 @@ class Entry extends Component {
                         pageText === 'my' ? (
                             <My />
                         ) : (
-                            <Push />
+                            <Push {...this.props} />
                         )
                 }
             </div>

@@ -99,6 +99,11 @@ const logout = (history) => {
     window.location.href = '/';
 }
 
+const emitEvent = (name, data) => {
+    const myEvent = new CustomEvent(name, data);
+    window.dispatchEvent(myEvent);
+}
+
 export {
     weChatSDKInit,
     weChatMessageShare,
@@ -106,5 +111,6 @@ export {
     weChatLogin,
     browser,
     getUrlParam,
-    logout
+    logout,
+    emitEvent
 }

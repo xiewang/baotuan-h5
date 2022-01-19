@@ -7,7 +7,6 @@ import {
   Toast
 } from 'antd-mobile';
 import { RightOutline } from 'antd-mobile-icons'
-
 import { withRouter } from 'react-router';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
@@ -27,6 +26,10 @@ class My extends Component {
   componentDidMount() {
     this._getMyInfo();
     this._getSummaryNum();
+    window.addEventListener("pushSuccess", e => {
+      this._getMyInfo();
+      this._getSummaryNum();
+    });
   }
 
   _getMyInfo() {
