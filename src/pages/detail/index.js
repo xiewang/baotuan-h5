@@ -165,7 +165,6 @@ class Detail extends Component {
 	}
 
 	_showPhoneEditShadow(value) {
-		const that = this;
 		this.setState({
 			DialogVisible: value || !this.state.DialogVisible
 		});
@@ -318,12 +317,12 @@ class Detail extends Component {
 					}}
 					actions={[[
 						{
-							key: 'confirm',
+							key: 'close',
 							text: '取消',
 							onClick: () => this._showPhoneEditShadow(false)
 						},
 						{
-							key: 'confirm3',
+							key: 'submit',
 							text: '提交',
 							bold: true,
 							onClick: this._updatePhone.bind(this)
