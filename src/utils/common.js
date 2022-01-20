@@ -28,6 +28,7 @@ const weChatMessageShare = (params) => {
             imgUrl: params.imgUrl || 'https://ad1.png', // 分享图标
             success: function () {
                 // 设置成功
+                alert('success')
             }
         })
     });

@@ -234,7 +234,7 @@ class Detail extends Component {
 		weChatSDKInit().then(res => {
 			if (res) {
 				const params = {
-					title: "来抱团-" + this.state.activity.name,
+					title: "来抱团-" + this.state.activity.activityName,
 					desc: this.state.activity.description,
 					link: window.location.href,
 					imgUrl: this.state.activity.picLink,
