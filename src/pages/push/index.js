@@ -155,7 +155,7 @@ class Push extends Component {
         Toast.clear();
         Toast.show({
           icon: 'success',
-          content: '上传成功',
+          content: '上传成功。内容将进行审核，审核后会上线',
         });
         this.setState({
           activityName: '',
