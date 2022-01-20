@@ -15,7 +15,7 @@ import moment from "moment";
 import { bindActionCreators } from 'redux';
 import { getToken } from "../../utils/auth";
 import { update } from '../../actions/session';
-import { emitEvent } from '../../utils/common';
+import { emitEvent, weChatMessageShare, weChatSDKInit } from '../../utils/common';
 
 class Detail extends Component {
 	constructor(props) {
@@ -35,13 +35,21 @@ class Detail extends Component {
 
 	componentDidMount() {
 		this.setState({
-			activity: this.props.location.state,
-			hasAudited: this.props.location.state.status === 0 ? false : true
+			activity: this.props.location.state || {},
+			hasAudited: this.props.location.state && this.props.location.state.status === 0 ? false : true
 		});
 		this.state.activity = this.props.location.state;
-		this._getRegisterStatus();
-		this._getRegisterUsers();
-		this._getPublisher(this.state.activity.userId);
+
+
+		const activityId = window.location.pathname.replace("/detail/", "");
+		this._getDetail(activityId).then(res => {
+			if (res) {
+				this._getRegisterStatus();
+				this._getRegisterUsers();
+				this._getPublisher(this.state.activity.userId);
+				this._shareToWechat();
+			}
+		})
 	}
 
 	_register() {
@@ -140,8 +148,6 @@ class Detail extends Component {
 		});
 	}
 
-
-
 	_getRegisterStatus() {
 		if (!getToken()) return;
 		request({
@@ -224,14 +230,49 @@ class Detail extends Component {
 		});
 	}
 
+	_shareToWechat() {
+		weChatSDKInit().then(res => {
+			if (res) {
+				const params = {
+					title: "来抱团-" + this.state.activity.name,
+					desc: this.state.activity.description,
+					link: window.location.href,
+					imgUrl: this.state.activity.picLink,
+				}
+				weChatMessageShare(params);
+			}
+		});
+	}
+
+	_getDetail(activityId) {
+		return new Promise((resolve, reject) => {
+			request({
+				method: 'get',
+				url: '/activity/detail?activityId=' + activityId || this.state.activity.activityId,
+			}).then((res) => {
+				if (res.data.state === 'SUCCESS' && res.data.data) {
+					this.setState({
+						activity: res.data.data
+					})
+					return resolve(true);
+				}
+				return resolve(false);
+			}, (error) => { resolve(false); });
+		});
+
+	}
+
 	render() {
 		const that = this;
+		if (!(this.state.activity && this.state.activity.activityId)) {
+			return (<div />);
+		}
 		return (
 			<div className={styles.container}>
 				<Header title="活动详情" {...this.props} />
 				<div className={styles.content}>
 					<div className={styles.iamge}>
-						<img alt={this.state.activity.name} src={this.state.activity.picLink} />
+						<img alt={this.state.activity.picLink} src={this.state.activity.picLink} />
 					</div>
 					<div className={styles.detail}>
 						<div className={styles.title}>

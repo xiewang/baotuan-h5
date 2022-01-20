@@ -57,7 +57,7 @@ class XXTRouter extends Component {
                 <CSSTransition appear={true} key={location.key} timeout={800} classNames={ANIMATION_MAP[history.action]}>
                     <Switch location={location}>
                         <Route path="/" exact children={() => <div />} />
-                        <Route path="/detail" exact component={Detail} />
+                        <Route path="/detail/*" exact component={Detail} />
                         <Route path="/login" exact component={Login} />
                         <AuthorizedRoute path="/audit" exact component={Audit} />
                         <AuthorizedRoute path="/setting" exact component={Setting} />

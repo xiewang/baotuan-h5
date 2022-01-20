@@ -17,7 +17,7 @@ class Header extends Component {
   }
 
   _jumpToDetailPage(data) {
-    this.props.history.push('/detail', data);
+    this.props.history.push('/detail/' + data.activityId, data);
   }
 
   render() {
