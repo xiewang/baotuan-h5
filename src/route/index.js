@@ -26,7 +26,7 @@ class XXTRouter extends Component {
     }
 
     componentDidMount() {
-        weChatSDKInit();
+        // weChatSDKInit();
     }
 
     _renderEntryChildren(props, Component) {

@@ -1,21 +1,38 @@
 import { removeToken } from "./auth";
 import { update } from '../actions/session';
+import request from "../utils/request";
 
 const weChatSDKInit = () => {
+    const timestamp = new Date().getTime();
+    const nonceStr = 'Wm3WZYTPz0wzccnW';
+    let signature = '';
     return new Promise((resolve, reject) => {
-        wx.config({
-            debug: false, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
-            appId: 'wx1425c0f4c2e6e3cd', // 必填，公众号的唯一标识
-            timestamp: 1626664720557, // 必填，生成签名的时间戳
-            nonceStr: 'Wm3WZYTPz0wzccnW', // 必填，生成签名的随机串
-            signature: '12085e1191fffd0ad3a3428afbe9a80948119b28',// 必填，签名
-            jsApiList: [
-                'updateAppMessageShareData',
-                'updateTimelineShareData',
-                'chooseImage'
-            ] // 必填，需要使用的JS接口列表
-        });
-        resolve(true);
+        request({
+            method: 'get',
+            url: '/user/wechat/signature?timestamp=' + timestamp + '&noncestr=' + nonceStr + '&url=' + window.location.href,
+        }).then((res) => {
+            if (res.data.state === 'SUCCESS' && res.data.data) {
+                signature = res.data.data
+                wx.config({
+                    debug: false, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
+                    appId: 'wx1425c0f4c2e6e3cd', // 必填，公众号的唯一标识
+                    timestamp: timestamp, // 必填，生成签名的时间戳
+                    nonceStr: nonceStr, // 必填，生成签名的随机串
+                    signature: signature,// 必填，签名
+                    jsApiList: [
+                        'updateAppMessageShareData',
+                        'updateTimelineShareData',
+                        'chooseImage'
+                    ] // 必填，需要使用的JS接口列表
+                });
+                resolve(true);
+            } else {
+                resolve(false);
+            }
+
+        }, (error) => { resolve(false) });
+
+
     })
 }
 
@@ -28,7 +45,7 @@ const weChatMessageShare = (params) => {
             imgUrl: params.imgUrl || 'https://ad1.png', // 分享图标
             success: function () {
                 // 设置成功
-                alert('success')
+                // alert('success')
             }
         })
     });
