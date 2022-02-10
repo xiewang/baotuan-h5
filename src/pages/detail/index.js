@@ -264,9 +264,9 @@ class Detail extends Component {
 
 	render() {
 		const that = this;
-		if (!(this.state.activity && this.state.activity.activityId)) {
-			return (<div />);
-		}
+		// if (!(this.state.activity && this.state.activity.activityId)) {
+		// 	return (<div />);
+		// }
 		return (
 			<div className={styles.container}>
 				<Header title="活动详情" {...this.props} />
