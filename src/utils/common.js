@@ -114,7 +114,7 @@ const getUrlParam = (paramName) => {
 const logout = (history) => {
     removeToken();
     update(null);
-    window.location.href = '/';
+    window.location.replace('/');
 }
 
 const emitEvent = (name, data) => {

@@ -67,7 +67,7 @@ class Login extends Component {
                     content: '登录成功',
                 });
                 setTimeout(() => {
-                    window.location.href = '/';
+                    window.location.replace('/');
                 }, 1200);
             } else {
                 Toast.show({
