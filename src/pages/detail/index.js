@@ -236,7 +236,7 @@ class Detail extends Component {
 				const params = {
 					title: "来抱团-" + this.state.activity.activityName,
 					desc: this.state.activity.description,
-					link: window.location.href + '?share=true',
+					link: window.location.href,
 					imgUrl: this.state.activity.picLink,
 				}
 				weChatMessageShare(params);

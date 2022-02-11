@@ -21,8 +21,8 @@ class Header extends Component {
       this.props.onLeftClick();
       return;
     }
-    const isShare = getUrlParam('share');
-    if (isShare === 'true') {
+    // const isShare = getUrlParam('share');
+    if (this.props.history.length === 1) {
       this.props.history.push('/');
     } else {
       this.props.history.goBack();

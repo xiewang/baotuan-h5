@@ -9,7 +9,7 @@ const weChatSDKInit = () => {
     return new Promise((resolve, reject) => {
         request({
             method: 'get',
-            url: '/user/wechat/signature?timestamp=' + timestamp + '&noncestr=' + nonceStr + '&url=' + window.location.href + encodeURIComponent('?share=true'),
+            url: '/user/wechat/signature?timestamp=' + timestamp + '&noncestr=' + nonceStr + '&url=' + window.location.href,
         }).then((res) => {
             if (res.data.state === 'SUCCESS' && res.data.data) {
                 signature = res.data.data
