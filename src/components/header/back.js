@@ -4,6 +4,7 @@ import styles from './styles.module.css';
 import cns from 'classnames';
 import { NavBar } from 'antd-mobile';
 import { LeftOutline } from 'antd-mobile-icons'
+import { getUrlParam } from '../../utils/common';
 
 class Header extends Component {
   constructor(props) {
@@ -20,7 +21,12 @@ class Header extends Component {
       this.props.onLeftClick();
       return;
     }
-    this.props.history.goBack();
+    const isShare = getUrlParam('share');
+    if (isShare === 'true') {
+      this.props.history.push('/');
+    } else {
+      this.props.history.goBack();
+    }
   }
 
   render() {
