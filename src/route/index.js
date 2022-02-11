@@ -36,7 +36,8 @@ class XXTRouter extends Component {
         } else {
             this.state.entryClass = 'home-base home-hide';
             setTimeout(() => {
-                document.getElementsByClassName("home-base home-hide")[0].setAttribute("class", 'home-base home-hide hide')
+                document.getElementsByClassName("home-base home-hide")[0] &&
+                    document.getElementsByClassName("home-base home-hide")[0].setAttribute("class", 'home-base home-hide hide')
             }, 500)
         }
         return (
@@ -44,6 +45,52 @@ class XXTRouter extends Component {
                 <Component {...this.props} />
             </div>
         )
+    }
+
+    _renderAuditChildren(props, Component) {
+        const { match } = props;
+        if (match) {
+            this.state.entryClass = 'home-base home-hide hide';
+            setTimeout(() => {
+                document.getElementsByClassName("home-base home-hide hide")[1] &&
+                    document.getElementsByClassName("home-base home-hide hide")[1].setAttribute("class", 'home-base home-show');
+                document.getElementsByClassName("transition-group")[0] &&
+                    document.getElementsByClassName("transition-group")[0].setAttribute("class", 'transition-group hide');
+            }, 500);
+            if (props.history.action === 'POP') {
+                setTimeout(() => {
+                    document.getElementsByClassName("transition-group")[0] &&
+                        document.getElementsByClassName("transition-group")[0].children[0] &&
+                        document.getElementsByClassName("transition-group")[0].children[0].classList.add('hide');
+                    document.getElementsByClassName("home-base home-hide hide")[1] &&
+                        document.getElementsByClassName("home-base home-hide hide")[1].setAttribute("class", 'home-base home-show');
+                }, 10);
+
+            }
+        } else {
+            this.state.entryClass = 'home-base home-hide';
+            document.getElementsByClassName("transition-group hide")[0] &&
+                document.getElementsByClassName("transition-group hide")[0].setAttribute("class", 'transition-group');
+            setTimeout(() => {
+                document.getElementsByClassName("home-base home-hide")[1] &&
+                    document.getElementsByClassName("home-base home-hide")[1].setAttribute("class", 'home-base home-hide hide');
+            }, 500)
+        }
+
+
+        if (props.location.pathname === '/audit' || (localStorage.getItem('lastPath') === '/audit' &&
+            props.location.pathname !== '/')) {
+            localStorage.setItem('lastPath', props.location.pathname);
+            return (
+                <div className={this.state.entryClass}>
+                    <Component {...this.props} />
+                </div>
+            );
+        } else {
+            localStorage.setItem('lastPath', props.location.pathname);
+            return null;
+        }
+
     }
 
     render() {
@@ -54,7 +101,7 @@ class XXTRouter extends Component {
 
         const Routes = withRouter(({ location, history }) => (
             <TransitionGroup className={'transition-group'}>
-                <CSSTransition appear={true} key={location.key} timeout={800} classNames={ANIMATION_MAP[history.action]}>
+                <CSSTransition appear={true} key={location.key} timeout={1000} classNames={ANIMATION_MAP[history.action]}>
                     <Switch location={location}>
                         <Route path="/" exact children={() => <div />} />
                         <Route path="/detail/*" exact component={Detail} />
@@ -72,6 +119,8 @@ class XXTRouter extends Component {
         return (
             <Router>
                 <Route path="/" exact children={props => this._renderEntryChildren(props, Entry)} />
+
+                <AuthorizedRoute path="/audit" exact children={props => this._renderAuditChildren(props, Audit)} />
                 <Routes />
             </Router>
         );

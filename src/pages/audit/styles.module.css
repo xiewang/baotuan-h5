@@ -1,6 +1,11 @@
 
 .container { 
    min-height: 500px;
+   background-color: #f5f5f5;
+   position: fixed;
+    height: 100%;
+    width: 100%;
+    top: 0px;
 }
 .title {
    line-height: 50px;
@@ -17,6 +22,13 @@
 }
 .content {
    padding-top: 45px;
+   position: fixed;
+   height: calc(100% - 0px);
+   width: 100%;
+   /* margin-top: 45px; */
+   top: 0px;
+   font-size: 13px;
+   overflow: scroll;
 }
 .contentRight {
    display: flex;
